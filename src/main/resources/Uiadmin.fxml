@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.Controllers.UiadminController">
+    <top>
+        <HBox alignment="CENTER" spacing="10" />
+    </top>
+    <center>
+        <GridPane alignment="CENTER" hgap="10" vgap="10">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" />
+                <ColumnConstraints hgrow="SOMETIMES" />
+                <ColumnConstraints hgrow="SOMETIMES" />
+                <ColumnConstraints hgrow="SOMETIMES" />
+                <ColumnConstraints hgrow="SOMETIMES" />
+                <ColumnConstraints hgrow="SOMETIMES" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="SOMETIMES" />
+                <RowConstraints />
+            </rowConstraints>
+
+            <TableView fx:id="userTable" prefHeight="300.0" prefWidth="600.0" GridPane.columnSpan="5" GridPane.rowIndex="1">
+                <columns>
+                    <TableColumn fx:id="emailColumn" prefWidth="196.40000915527344" text="Email" />
+                    <TableColumn fx:id="usernameColumn" prefWidth="138.0" text="Username" />
+                    <TableColumn fx:id="roleColumn" prefWidth="86.19998168945312" text="Role" />
+                    <TableColumn fx:id="verifiedColumn" prefWidth="81.800048828125" text="Verified" />
+                    <TableColumn fx:id="bannedColumn" prefWidth="85.60001220703123" text="Banned" />
+                </columns>
+            </TableView>
+            <ButtonBar GridPane.columnIndex="1">
+                <buttons>
+                    <Button fx:id="addUserButton" layoutX="190.0" layoutY="425.0" onAction="#handleAddUser" prefHeight="67.0" prefWidth="229.0" style="-fx-background-color: linear-gradient(to right top, #6c5ce7, #8554ed, #9f48f1, #b935f2, #d300f0); -fx-background-radius: 30;" text="Add User" textFill="WHITE">
+                        <font>
+                            <Font name="System Bold" size="22.0" />
+                        </font>
+                    </Button>
+
+                    <Button fx:id="deleteUserButton" disable="true" layoutX="190.0" layoutY="425.0" onAction="#handleDeleteUser" prefHeight="67.0" prefWidth="229.0" style="-fx-background-color: linear-gradient(to right top, #6c5ce7, #8554ed, #9f48f1, #b935f2, #d300f0); -fx-background-radius: 30;" text="Delete User" textFill="WHITE">
+                        <font>
+                            <Font name="System Bold" size="22.0" />
+                        </font>
+                    </Button>
+                    <Button fx:id="logout" layoutX="190.0" layoutY="425.0" onAction="#logout" prefHeight="67.0" prefWidth="229.0" style="-fx-background-color: linear-gradient(to right top, #6c5ce7, #8554ed, #9f48f1, #b935f2, #d300f0); -fx-background-radius: 30;" text="Log Out" textFill="WHITE">
+                        <font>
+                            <Font name="System Bold" size="22.0" />
+                        </font>
+                    </Button>
+                </buttons>
+            </ButtonBar>
+        </GridPane>
+    </center>
+</BorderPane>
