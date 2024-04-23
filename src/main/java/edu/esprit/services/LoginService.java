@@ -1,5 +1,7 @@
 package edu.esprit.services;
 import edu.esprit.entities.User;
+import edu.esprit.entities.admin;
+import edu.esprit.entities.voyageur;
 import edu.esprit.utiles.MyConnection;
 
 import java.sql.PreparedStatement;
@@ -23,8 +25,14 @@ public class LoginService {
                 String password = resultSet.getString("password");
                 String role = resultSet.getString("role");
 
-                user = new User(id,email,password,username,role);
-            }
+                switch (role) {
+                    case "admin":
+                        user = new admin(id, email, password, username, role);
+                        break;
+                    case "voyageur":
+                        user = new voyageur(id, email, password, username, role);
+                        break;
+            }}
         } catch (SQLException e) {
             System.out.println("Error fetching user by username: " + e.getMessage());
         }

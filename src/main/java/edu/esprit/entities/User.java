@@ -19,9 +19,8 @@ public class User {
         this.password = password;
         this.username = username;
         this.role = role;
-        // Default values for verified and isBanned
-        this.verified = false;
-        this.isBanned = false;
+        this.verified = verified;
+        this.isBanned = isBanned;
     }
 
     // Getters and setters

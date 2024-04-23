@@ -1,6 +1,8 @@
 package edu.esprit.Controllers;
 
 import edu.esprit.entities.User;
+import edu.esprit.entities.admin;
+import edu.esprit.entities.voyageur;
 import edu.esprit.services.UserService;
 import edu.esprit.utiles.MyConnection;
 import javafx.event.ActionEvent;
@@ -82,9 +84,14 @@ public class AddUser {
             } else {
                 wrps.setText("");
             }
-
+            User user= null;
             if (wrusr.getText().equals("") && wrps.getText().equals("") && wremail.getText().equals("")) {
-                User user = new User();
+
+                if (role.equals("Admin")) {
+                    user = new admin();
+                } else if (role.equals("Voyageur")) {
+                    user = new voyageur();
+                }
                 String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
                 user.setEmail(email);
                 user.setUsername(username);

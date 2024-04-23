@@ -10,6 +10,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import edu.esprit.entities.User;
 import edu.esprit.services.UserService;
@@ -37,29 +40,17 @@ public class UiadminController {
     @FXML
     private Button logout;
 
+    @FXML
+    private FlowPane userCardContainer;
+    private VBox selectedCard;
 
     private UserService userService = new UserService();
     private ObservableList<User> userList = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
-        // Initialize table columns
-        emailColumn.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue().getEmail()));
-        usernameColumn.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue().getUsername()));
-        roleColumn.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue().getRole()));
-        verifiedColumn.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue().isVerified()));
-        bannedColumn.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue().isBanned()));
-
-        // Populate table with existing users
         userList.addAll(userService.getAllData());
-        userTable.setItems(userList);
-
-        // Listen for selection changes and enable/disable buttons accordingly
-        userTable.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> {
-                    deleteUserButton.setDisable(newValue == null);
-                }
-        );
+        userList.forEach(this::loadUserCard);
     }
 
     @FXML
@@ -69,13 +60,19 @@ public class UiadminController {
 
 
     @FXML
-    private void handleDeleteUser() {
-        // Code to handle deleting the selected user
-        User selectedUser = userTable.getSelectionModel().getSelectedItem();
-        if (selectedUser != null) {
-            userService.deleteEntity(selectedUser);
-            userList.remove(selectedUser);
+    private void handleDeleteUser(ActionEvent event) {
+        switchScene("/deleteuser.fxml", event);
+    }
+
+
+    private User getUserFromCard(VBox card) {
+        for (Node node : userCardContainer.getChildren()) {
+            if (node instanceof VBox && node.equals(card)) {
+                UserCardController cardController = (UserCardController) ((FXMLLoader) ((VBox) node).getProperties().get("fxmlLoader")).getController();
+                return userService.getUserByEmail(cardController.getemailLabel().getText());
+            }
         }
+        return null;
     }
 
 
@@ -95,4 +92,19 @@ public class UiadminController {
     private void logout(ActionEvent event) {
         switchScene("/login.fxml", event);
     }
+
+
+    private void loadUserCard(User user) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/UserCard.fxml"));
+            VBox card = loader.load();
+            UserCardController cardController = loader.getController();
+            cardController.initData(user);
+            userCardContainer.getChildren().add(card);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

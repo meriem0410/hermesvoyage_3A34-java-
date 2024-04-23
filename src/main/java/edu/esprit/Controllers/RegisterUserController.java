@@ -2,6 +2,7 @@ package edu.esprit.Controllers;
 
 
 import edu.esprit.entities.User;
+import edu.esprit.entities.voyageur;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -125,13 +126,15 @@ public class RegisterUserController {
 
             if ((wrusr.getText().equals("")) && (wrps.getText().equals("")) && (wremail.getText().equals("")) &&
                     (wrcheck.getText().equals("")) && (wrpsc.getText().equals("")) )
-                { User user = new User();
+                { voyageur voy = new voyageur();
                     String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-                    user.setEmail(email);
-                    user.setUsername(username);
-                    user.setPassword(hashedPassword);
-                    user.setRole("voyageur");
-                    userService.addEntity(user);
+                    voy.setEmail(email);
+                    voy.setUsername(username);
+                    voy.setPassword(hashedPassword);
+                    voy.setRole("voyageur");
+                    userService.addEntity(voy);
+                    voy.setBanned(false);
+                    voy.setVerified(false);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Success");
                 alert.setContentText("Signed Up! Please verify your account");

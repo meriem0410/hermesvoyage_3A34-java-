@@ -1,6 +1,8 @@
 package edu.esprit.services;
 
 import edu.esprit.entities.User;
+import edu.esprit.entities.admin;
+import edu.esprit.entities.voyageur;
 import edu.esprit.interfaces.EService;
 import edu.esprit.utiles.MyConnection;
 
@@ -31,6 +33,14 @@ public class UserService implements EService<User> {
         }
     }
 
+    public void addEntity(admin admin) {
+        addEntity((User) admin);
+    }
+
+    public void addEntity(voyageur voyageur) {
+        addEntity((User) voyageur);
+    }
+
 
 
     @Override
@@ -51,6 +61,15 @@ public class UserService implements EService<User> {
 
     }
 
+    public User getUserByEmail(String email) {
+        for (User user : getAllData()) {
+            if (user.getEmail().equals(email)) {
+                return user;
+            }
+        }
+        return null; // User not found
+    }
+
     @Override
     public Set<User> getAllData() {
         Set<User> data = new HashSet<>();
@@ -59,12 +78,22 @@ public class UserService implements EService<User> {
             Statement st = MyConnection.getInstance().getCnx().createStatement();
             ResultSet rs = st.executeQuery(requete);
             while (rs.next()) {
-                User user = new User();
+                User user;
+                String role = rs.getString("role");
+                if ("admin".equals(role)) {
+                    user = new admin();
+                } else if ("voyageur".equals(role)) {
+                    user = new voyageur();
+                } else {
+                    user = new User();
+                }
                 user.setId(rs.getInt("id"));
                 user.setUsername(rs.getString("username"));
                 user.setEmail(rs.getString("email"));
                 user.setPassword(rs.getString("password"));
-                user.setRole(rs.getString("role"));
+                user.setRole(role);
+                user.setVerified(rs.getBoolean("verified"));
+                user.setBanned(rs.getBoolean("is_banned"));
                 data.add(user);
             }
         } catch (SQLException e) {
@@ -73,18 +102,7 @@ public class UserService implements EService<User> {
         return data;
     }
 
-    public boolean updatePassword(String newPassword,String email) {
-        String query = "UPDATE user SET password = ? where email= ?";
-        try (PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(query)) {
-            pst.setString(1, newPassword);
-            pst.setString(2, email);
-            int rowsUpdated = pst.executeUpdate();
-            return rowsUpdated > 0;
-        } catch (SQLException e) {
-            System.out.println("Error updating password: " + e.getMessage());
-            return false;
-        }
-    }
+
 
 
 

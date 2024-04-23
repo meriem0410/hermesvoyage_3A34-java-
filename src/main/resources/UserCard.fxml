@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="userCard" prefHeight="154.0" prefWidth="223.0" spacing="5" style="-fx-border-color: black; -fx-border-width: 2px;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.Controllers.UserCardController">
+
+    <HBox prefHeight="38.0" prefWidth="242.0">
+        <Label text="E-Mail            :">E-Mail   :    </Label><Label fx:id="emailLabel"  />
+    </HBox>
+    <HBox prefHeight="38.0" prefWidth="242.0">
+        <Label text="Username      :">Username   :    </Label><Label fx:id="usernameLabel" />
+    </HBox>
+    <HBox prefHeight="38.0" prefWidth="199.0">
+        <Label text="Role               :">Role   :     </Label><Label fx:id="roleLabel" />
+    </HBox>
+    <HBox prefHeight="38.0" prefWidth="242.0">
+        <Label text="Verified?         :">Verified?   :     </Label><Label fx:id="verifLabel" text="" />
+    </HBox>
+    <HBox prefHeight="38.0" prefWidth="242.0">
+        <Label text="Banned?         :">Banned?   :     </Label><Label fx:id="isBannedLabel" text="" />
+    </HBox>
+
+
+    <!-- Add more HBox elements for other user properties as needed -->
+
+</VBox>
