@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import java.awt.Color?>
+<AnchorPane prefHeight="700.0" prefWidth="1200.0" stylesheets="@nord-light.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ListLog">
+    <children>
+        <ImageView>
+            <image>
+
+            </image>
+        </ImageView>
+        <Text layoutX="58.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Liste des Evenements " wrappingWidth="489.13671875">
+            <font>
+                <Font size="40.0" />
+            </font>
+        </Text>
+        <TableView fx:id="list_log" layoutX="22.0" layoutY="122.0" prefHeight="456.0" prefWidth="1138.0">
+            <columns>
+                <TableColumn fx:id="log_nom" prefWidth="75.0" text="Nom" />
+                <TableColumn fx:id="log_date" prefWidth="75.0" text="date" />
+                <TableColumn fx:id="log_heure" prefWidth="102.0" text="heure" />
+                <TableColumn fx:id="log_dure" prefWidth="89.0" text="dure" />
+                <TableColumn fx:id="log_nbreparti" prefWidth="91.0" text="nbreparticipants" />
+                <TableColumn fx:id="log_lieu" prefWidth="93.0" text="lieu" />
+                <TableColumn fx:id="log_type" prefWidth="116.0" text="type" />
+                <TableColumn fx:id="log_oragnisateur" prefWidth="95.0" text="Organisateur" />
+                <TableColumn fx:id="log_prix" prefWidth="103.0" text="prix" />
+                <TableColumn fx:id="log_img" prefWidth="137.0" text="image" />
+                <TableColumn fx:id="action" prefWidth="161.0" text="Action" />
+            </columns>
+        </TableView>
+    </children>
+</AnchorPane>
