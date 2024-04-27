@@ -35,6 +35,10 @@ public class LoginController {
     @FXML
     private Label warning;
 
+    @FXML
+    private Hyperlink forgetpass;
+
+
 
     private final LoginService loginService = new LoginService();
 
@@ -71,6 +75,11 @@ public class LoginController {
         }
     }
 
+
+    @FXML
+    void forgetpassword(ActionEvent event) {
+        switchScene("/forget_password.fxml", event);
+    }
     @FXML
     void handleSignIn(ActionEvent event) {
         switchScene("/RegisterUser.fxml", event);

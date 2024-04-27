@@ -1,6 +1,7 @@
 package edu.esprit.Controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import edu.esprit.entities.User;
 import javafx.scene.layout.VBox;
@@ -21,6 +22,9 @@ public class UserCardController {
 
     @FXML
     private VBox userCard;
+
+    @FXML
+    private Button ban;
 
     private boolean selected = false;
 

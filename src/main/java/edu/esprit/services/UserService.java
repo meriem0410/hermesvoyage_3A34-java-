@@ -69,6 +69,27 @@ public class UserService implements EService<User> {
         }
         return null; // User not found
     }
+    public boolean doesEmailExist(String email) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        boolean exists = false;
+
+        try {
+            conn = MyConnection.getInstance().getCnx();
+            String sql = "SELECT COUNT(*) FROM user WHERE email = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, email);
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                exists = count > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return exists;
+    }
 
     @Override
     public Set<User> getAllData() {
@@ -101,6 +122,59 @@ public class UserService implements EService<User> {
         }
         return data;
     }
+
+    public boolean updatePassword(String newPassword,String email) {
+        String query = "UPDATE user SET password = ? where email= ?";
+        try (PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(query)) {
+            pst.setString(1, newPassword);
+            pst.setString(2, email);
+            int rowsUpdated = pst.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (SQLException e) {
+            System.out.println("Error updating password: " + e.getMessage());
+            return false;
+        }
+    }
+
+
+    public void updateOTP(String email, String otp) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        try {
+            conn = MyConnection.getInstance().getCnx();
+            String sql = "UPDATE user SET OTP = ? WHERE email = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, otp);
+            stmt.setString(2, email);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public String getOTP(String email) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String otp = null;
+
+        try {
+            conn = MyConnection.getInstance().getCnx();
+            String sql = "SELECT otp FROM user WHERE email = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, email);
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                otp = rs.getString("otp");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return otp;
+    }
+
+
+
 
 
 
