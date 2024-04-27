@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.GestionTransport.Controller.Transport.FrontTransport">
+   <children>
+      <Pane layoutX="6.0" layoutY="-11.0" prefHeight="409.0" prefWidth="609.0">
+         <children>
+            <Button fx:id="voirtickets" layoutX="69.0" layoutY="285.0" mnemonicParsing="false" onAction="#handleVoirTicketsButtonAction" text="Voir tous les tickets" />
+            <TableView fx:id="transportTableView" layoutX="69.0" layoutY="78.0" prefHeight="198.0" prefWidth="332.0">
+               <columns>
+                  <TableColumn fx:id="transport_cell_type" prefWidth="135.0" text="Type de transport" />
+                  <TableColumn fx:id="transport_cell_description" prefWidth="136.0" text="Description" />
+                  <TableColumn fx:id="transport_cell_id" prefWidth="60.0" text="ID" />
+               </columns>
+            </TableView>
+            <Text layoutX="100.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="La liste des Transports">
+               <font>
+                  <Font name="System Bold Italic" size="24.0" />
+               </font>
+            </Text>
+           
+            <Button fx:id="VoirStatistiquesButton" layoutX="217.0" layoutY="285.0" mnemonicParsing="false" onAction="#handleVoirStatistiquesButtonAction" text="VoirStatistiques" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

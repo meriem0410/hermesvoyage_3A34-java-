@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Maven: org.openjfx:javafx-web:win:17" type="java-imported" external-system-id="Maven">
+    <properties groupId="org.openjfx" artifactId="javafx-web" version="17" classifier="win" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-web/17/javafx-web-17-win.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-web/17/javafx-web-17-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-web/17/javafx-web-17-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

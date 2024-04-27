@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.GestionTransport.Controller.Tickets.BackTickets">
+   <children>
+      <Pane layoutX="7.0" prefHeight="400.0" prefWidth="593.0">
+         <children>
+            <Button fx:id="addTicket" layoutX="137.0" layoutY="257.0" mnemonicParsing="false" onAction="#handleAjouterTransportButtonAction" text="Add Ticket">
+               <padding>
+                  <Insets left="20.0" right="20.0" />
+               </padding>
+            </Button>
+            <Button fx:id="update" layoutX="248.0" layoutY="257.0" mnemonicParsing="false" onAction="#handleUpdateButtonAction" text="Update">
+               <padding>
+                  <Insets left="20.0" right="20.0" />
+               </padding>
+            </Button>
+            <Button fx:id="delete" layoutX="347.0" layoutY="257.0" mnemonicParsing="false" onAction="#handleDeleteButtonAction" text="Delete">
+               <padding>
+                  <Insets left="20.0" right="20.0" />
+               </padding>
+            </Button>
+            <TableView fx:id="ticketsTableView" layoutX="85.0" layoutY="35.0" prefHeight="200.0" prefWidth="372.0">
+              <columns>
+                <TableColumn fx:id="tickets_cell_id" prefWidth="75.0" text="ID" />
+                <TableColumn fx:id="tickets_cell_depart" prefWidth="75.0" text="Depart" />
+                  <TableColumn fx:id="tickets_cell_arrive" prefWidth="75.0" text="Arirve" />
+                  <TableColumn fx:id="tickets_cell_prix" prefWidth="75.0" text="Prix" />
+                  <TableColumn fx:id="tickets_cell_type" prefWidth="75.0" text="Type" />
+              </columns>
+            </TableView>
+            <Text layoutX="160.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="La liste des tickets">
+               <font>
+                  <Font name="System Bold Italic" size="26.0" />
+               </font>
+            </Text>
+            <Button fx:id="voirtickets" layoutX="172.0" layoutY="294.0" mnemonicParsing="false" onAction="#handlevoirticketsButtonAction" text="Voir tickets" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
