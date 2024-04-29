@@ -69,6 +69,45 @@ public class UserService implements EService<User> {
         }
         return null; // User not found
     }
+    public String getEmailByUsername(String username) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String email = null;
+
+        try {
+            conn = MyConnection.getInstance().getCnx();
+            String query = "SELECT email FROM user WHERE username = ?";
+            stmt = conn.prepareStatement(query);
+            stmt.setString(1, username);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                email = rs.getString("email");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle SQLException
+        } finally {
+            // Close resources
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                // Handle SQLException while closing resources
+            }
+        }
+
+        return email;
+    }
     public boolean doesEmailExist(String email) {
         Connection conn = null;
         PreparedStatement stmt = null;

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="root" prefHeight="787.0" prefWidth="936.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.Controllers.LoginController">
+   <children>
+      <AnchorPane layoutX="23.0" layoutY="34.0" prefHeight="519.0" prefWidth="606.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="47.0">
+         <AnchorPane layoutX="327.0" layoutY="32.0" maxWidth="551.0" prefHeight="599.0" prefWidth="551.0" style="-fx-background-color: white; -fx-background-radius: 1em;" AnchorPane.bottomAnchor="62.0" AnchorPane.leftAnchor="327.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="32.0">
+            <children>
+               <Label layoutX="87.0" layoutY="125.0" prefHeight="27.0" prefWidth="441.0" text="Please enter the verification code sent to your e-mail" AnchorPane.leftAnchor="87.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="125.0">
+                  <font>
+                     <Font size="18.0" />
+                  </font>
+               </Label>
+
+
+
+               <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="73.0" layoutY="193.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <!--> <Image url="/user.png" /><!-->
+                  </image>
+               </ImageView>
+
+               <Label layoutX="105.0" layoutY="62.0" prefHeight="67.0" prefWidth="326.0" text="Account verification">
+                  <font>
+                     <Font name="System Bold" size="30.0" />
+                  </font>
+               </Label>
+               <TextField fx:id="entredotp" layoutX="162.0" layoutY="214.0" prefHeight="26.0" prefWidth="326.0" promptText="Verification Code" />
+
+               <Button fx:id="verify" layoutX="214.0" layoutY="387.0" onAction="#verifyotp" prefHeight="50.0" prefWidth="186.0" style="-fx-background-color: #8ac0b6; -fx-background-radius: 30;" text="Confirm" textFill="WHITE">
+                  <font>
+                     <Font name="System Bold" size="22.0" />
+                  </font>
+               </Button>
+
+
+               <Label fx:id="warning2" layoutX="193.0" layoutY="272.0" prefWidth="263.0" style="-fx-text-fill: RED;" text="">
+                  <font>
+                     <Font size="18.0" />
+                  </font>
+               </Label>
+               <Label fx:id="aa" layoutX="66.0" layoutY="329.0" prefHeight="18.0" prefWidth="358.0" text="" />
+
+
+
+            </children>
+            <effect>
+               <DropShadow />
+            </effect>
+         </AnchorPane>
+         <AnchorPane layoutX="14.0" layoutY="-26.0" prefHeight="714.0" prefWidth="334.0" style="-fx-background-color: #8ac0b6;; -fx-background-radius: 1em;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="-26.0">
+            <effect>
+               <DropShadow />
+            </effect>
+            <children>
+               <ImageView fitHeight="191.0" fitWidth="194.0" layoutX="75.0" layoutY="244.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <!-->  <Image url="/logo1.png"  /><!-->
+                  </image>
+               </ImageView>
+            </children>
+         </AnchorPane>
+      </AnchorPane>
+   </children>
+</AnchorPane>
