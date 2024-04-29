@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.gui.FrontReservationController">
+    <children>
+        <ScrollPane fx:id="ScrollPaneReservation" layoutX="24.0" layoutY="74.0" prefHeight="312.0" prefWidth="313.0">
+            <content>
+                <VBox fx:id="ReservationVbox" prefHeight="408.0" prefWidth="656.0" />
+            </content>
+        </ScrollPane>
+        <AnchorPane layoutX="351.0" layoutY="62.0" prefHeight="319.0" prefWidth="249.0">
+            <children>
+                <Label layoutX="14.0" layoutY="69.0" text="Checkin" />
+                <Label layoutX="19.0" layoutY="104.0" prefHeight="18.0" prefWidth="78.0" text="Nb d'invités" />
+                <Label layoutX="19.0" layoutY="143.0" text="Checkout" />
+                <Label layoutX="19.0" layoutY="177.0" text="user_id" />
+                <Label layoutX="3.0" layoutY="213.0" prefHeight="18.0" prefWidth="78.0" text="Hebergement_id" />
+                <TextField fx:id="nomReservationUpdate" layoutX="87.0" layoutY="65.0" prefHeight="26.0" prefWidth="152.0" />
+                <TextField fx:id="nbPlacesUpdate" layoutX="87.0" layoutY="101.0" />
+                <TextField fx:id="checkoutReservationUpdate" layoutX="87.0" layoutY="139.0" />
+                <ChoiceBox fx:id="userIdUpdate" layoutX="87.0" layoutY="173.0" prefWidth="150.0" />
+                <ChoiceBox fx:id="EventIdUpdateReservation" layoutX="87.0" layoutY="209.0" prefWidth="150.0" />
+                <Button fx:id="updateReservationBtn" layoutX="32.0" layoutY="258.0" mnemonicParsing="false" onAction="#OnClickedReserverUpdate" text="update" />
+                <Button fx:id="deleteReservationBtn" layoutX="150.0" layoutY="258.0" mnemonicParsing="false" onAction="#OnClickedDeleteReservation" text="Delete" />
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutX="15.0" layoutY="5.0" prefHeight="68.0" prefWidth="569.0">
+            <children>
+                <Label layoutX="234.0" layoutY="14.0" prefHeight="18.0" prefWidth="142.0" text="Reservation Front" />
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

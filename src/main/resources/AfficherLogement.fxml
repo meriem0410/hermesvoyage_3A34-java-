@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="960.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.gui.Afficherhebergement">
+    <children>
+        <HBox prefHeight="600.0" prefWidth="200.0" style="-fx-background-color: #8ac0b6;">
+            <children>
+                <VBox alignment="CENTER_LEFT" onMouseClicked="#GotoAjouterHebergement" prefHeight="600.0" prefWidth="200.0" HBox.hgrow="NEVER">
+                    <children>
+                        <ImageView fitHeight="79.0" fitWidth="162.0" pickOnBounds="true" preserveRatio="true">
+                            <viewport>
+                                <Rectangle2D />
+                            </viewport>
+                            <image>
+                                <Image url="@img/cap.png" />
+                            </image>
+                            <VBox.margin>
+                                <Insets bottom="130.0" top="-170.0" />
+                            </VBox.margin>
+                        </ImageView>
+                        <Label text="Gestion des Hebergements">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets bottom="5.0" />
+                            </VBox.margin>
+                        </Label>
+                        <Label fx:id="btnAjoutVoy" onMouseClicked="#gotoAjouterhebergement" text="* Ajouter un hébergement">
+                            <VBox.margin>
+                                <Insets left="20.0" />
+                            </VBox.margin>
+                        </Label>
+                        <Label fx:id="btnListeVoy" onMouseClicked="#gotoAfficherHebergement" text="* Afficher les hébergements">
+                            <VBox.margin>
+                                <Insets left="20.0" />
+                            </VBox.margin>
+                        </Label>
+                        <Label text="Gestion des Reservations">
+                            <VBox.margin>
+                                <Insets bottom="5.0" top="10.0" />
+                            </VBox.margin>
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="btnAjoutProg" onMouseClicked="#gotoAjouterReservation" text="* Ajouter une réservation *">
+                            <VBox.margin>
+                                <Insets left="20.0" />
+                            </VBox.margin>
+                        </Label>
+                        <Label fx:id="btnListeProg" onMouseClicked="#gotoListReservation" text="* Liste des réservations">
+                            <VBox.margin>
+                                <Insets left="20.0" />
+                            </VBox.margin>
+                        </Label>
+                    </children>
+                    <HBox.margin>
+                        <Insets />
+                    </HBox.margin>
+                    <padding>
+                        <Insets left="20.0" />
+                    </padding>
+                </VBox>
+            </children>
+        </HBox>
+        <VBox layoutX="200.0" prefHeight="50.0" prefWidth="760.0" style="-fx-background-color: #fbfcfa;">
+            <children>
+                <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="NEVER">
+                    <children>
+                        <Label text="- Bienvenue -" textAlignment="CENTER" textFill="#8ac0b6" HBox.hgrow="NEVER">
+                            <font>
+                                <Font name="Arial Italic" size="20.0" />
+                            </font>
+                            <HBox.margin>
+                                <Insets left="10.0" top="11.0" />
+                            </HBox.margin>
+                        </Label>
+                        <TextField prefHeight="26.0" prefWidth="230.0" promptText="Search" style="-fx-background-color: #3f3f40; -fx-text-fill: #fbfcfa;" HBox.hgrow="NEVER">
+                            <HBox.margin>
+                                <Insets left="375.0" top="11.0" />
+                            </HBox.margin>
+                        </TextField>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+        <VBox layoutX="200.0" layoutY="50.0" prefHeight="550.0" prefWidth="760.0" style="-fx-background-color: #f2f2f2;">
+            <children>
+                <VBox prefHeight="662.0" prefWidth="739.0" style="-fx-border-color: #8ac0b6;" VBox.vgrow="NEVER">
+                    <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </VBox.margin>
+                    <children>
+                        <Label text="Liste des voyages" textFill="#d6a523" VBox.vgrow="NEVER">
+                            <VBox.margin>
+                                <Insets top="10.0" />
+                            </VBox.margin>
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Label>
+                        <TableView fx:id="devisTableView" onMouseClicked="#rowClicked" prefHeight="349.0" prefWidth="718.0">
+                            <columns>
+                                <TableColumn fx:id="idCol" maxWidth="322.5279846191406" minWidth="90.12799072265625" prefWidth="142.89599609375" resizable="false" text="id" />
+                                <TableColumn fx:id="descriptionCol" maxWidth="220.0" minWidth="152.41599774360657" prefWidth="152.41599774360657" resizable="false" text="description" />
+                                <TableColumn fx:id="adresseCol" maxWidth="288.4159393310547" minWidth="116.76795959472656" prefWidth="160.9359893798828" resizable="false" text="adresse" />
+                                <TableColumn fx:id="prixCol" maxWidth="40.7359619140625" minWidth="20.0" prefWidth="40.7359619140625" text="prix" />
+                                <TableColumn fx:id="imageCol" maxWidth="434.4160461425781" minWidth="220.0" prefWidth="338.6559143066406" resizable="false" text="Images" />
+                                <TableColumn fx:id="maxguestCol" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" resizable="false" text="Capacité" />
+                                <TableColumn fx:id="amenitiesCol" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" resizable="false" text="Amenities" />
+                            </columns>
+                            <VBox.margin>
+                                <Insets top="20.0" />
+                            </VBox.margin>
+                        </TableView>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                            <children>
+                                <Button fx:id="btnModifier" mnemonicParsing="false" onAction="#gotoModifierheb" style="-fx-background-color: #d6a523;" text="Modifier" textFill="WHITE">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                </Button>
+                                <Button fx:id="btnSupprimer" mnemonicParsing="false" onAction="#gotoSupprimerheb" style="-fx-background-color: #Cb3221;" text="Supprimer" textFill="WHITE">
+                                    <HBox.margin>
+                                        <Insets left="20.0" />
+                                    </HBox.margin>
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                </Button>
+                            </children>
+                            <VBox.margin>
+                                <Insets top="20.0" />
+                            </VBox.margin>
+                        </HBox>
+                    </children>
+                    <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </padding>
+                </VBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
