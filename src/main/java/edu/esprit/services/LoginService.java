@@ -27,10 +27,10 @@ public class LoginService {
 
                 switch (role) {
                     case "admin":
-                        user = new admin(id, email, password, username, role);
+                        user = new admin(id, email, password, username, role,true,true);
                         break;
                     case "voyageur":
-                        user = new voyageur(id, email, password, username, role);
+                        user = new voyageur(id, email, password, username, role,false,false);
                         break;
             }}
         } catch (SQLException e) {

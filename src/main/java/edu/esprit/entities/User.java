@@ -14,7 +14,7 @@ public class User {
         // Default constructor
     }
 
-    public User(int id , String email, String password, String username, String role) {
+    public User(int id, String email, String password, String username, String role, boolean verified, boolean isBanned) {
         this.email = email;
         this.password = password;
         this.username = username;

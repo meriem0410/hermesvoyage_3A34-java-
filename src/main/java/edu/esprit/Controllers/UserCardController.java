@@ -1,10 +1,12 @@
 package edu.esprit.Controllers;
 
+import edu.esprit.services.UserService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import edu.esprit.entities.User;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 
 import java.awt.event.MouseEvent;
 
@@ -25,6 +27,9 @@ public class UserCardController {
 
     @FXML
     private Button ban;
+    private final UserService userService = new UserService();
+
+
 
     private boolean selected = false;
 
@@ -36,29 +41,59 @@ public class UserCardController {
         roleLabel.setText(user.getRole());
         if (user.isVerified()) {
             verifLabel.setText("Yes");
+            ban.setText("Unban");
+            ban.setStyle("-fx-background-color: WHITE; -fx-background-radius: 30;");
+            ban.setTextFill(Paint.valueOf("Red"));
         } else {
             verifLabel.setText("No");
+            ban.setText("Ban");
+            ban.setStyle("-fx-background-color: RED; -fx-background-radius: 30;");
+            ban.setTextFill(Paint.valueOf("White"));
         }
         if (user.isBanned()) {
             isBannedLabel.setText("Yes");
+
         } else {
             isBannedLabel.setText("No");
         }
 
-        userCard.setOnMouseClicked(event -> toggleSelection());
+        ban.setOnAction(event -> banuser(user));
+
+
+
 
 
 
     }
-    private void toggleSelection() {
-        selected = !selected;
-        // Change the style of the card based on selection state
-        if (selected) {
-            userCard.setStyle("-fx-border-color: blue; -fx-border-width: 2px;");
+
+
+    @FXML
+    void banuser(User user) {
+        boolean newBannedStatus = !user.isBanned(); // Toggle the banned status
+        boolean updatedSuccessfully = userService.updateban(newBannedStatus, user.getEmail());
+
+        if (updatedSuccessfully) {
+            user.setBanned(newBannedStatus);
+
+            if (user.isBanned()) {
+                ban.setText("Unban");
+                isBannedLabel.setText("Yes");
+                ban.setStyle("-fx-background-color: WHITE; -fx-background-radius: 30;");
+                ban.setTextFill(Paint.valueOf("Red"));
+            } else {
+                ban.setText("Ban");
+                isBannedLabel.setText("No");
+                ban.setStyle("-fx-background-color: RED; -fx-background-radius: 30;");
+                ban.setTextFill(Paint.valueOf("White"));
+            }
         } else {
-            userCard.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
+            // Handle error, maybe show an alert to the user
+            System.out.println("Failed to update banned status in the database.");
         }
     }
+
+
+
     public Label getemailLabel() {
         return emailLabel;
     }

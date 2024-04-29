@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -42,7 +43,7 @@ public class UiadminController {
 
     @FXML
     private FlowPane userCardContainer;
-    private VBox selectedCard;
+    private AnchorPane selectedCard;
 
     private UserService userService = new UserService();
     private ObservableList<User> userList = FXCollections.observableArrayList();

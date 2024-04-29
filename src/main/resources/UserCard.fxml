@@ -2,8 +2,9 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox fx:id="userCard" prefHeight="199.0" prefWidth="223.0" spacing="5" style="-fx-border-color: black; -fx-border-width: 2px;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.Controllers.UserCardController">
+<VBox fx:id="userCard" prefHeight="199.0" prefWidth="236.0" spacing="5" style="-fx-background-color: #DFD6D4;-fx-background-radius: 1em; " xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.Controllers.UserCardController">
 
     <HBox prefHeight="38.0" prefWidth="242.0">
         <Label text="E-Mail            :">E-Mail   :    </Label><Label fx:id="emailLabel" />
@@ -24,7 +25,11 @@
       <children>
          <AnchorPane prefHeight="29.0" prefWidth="225.0">
             <children>
-               <Button fx:id="ban" layoutX="74.0" layoutY="1.0" mnemonicParsing="false" text="Button" />
+                <Button fx:id="ban" layoutX="33.0" layoutY="9.0" prefHeight="18.0" prefWidth="158.0" style="-fx-background-color: #8ac0b6; -fx-background-radius: 30;" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="22.0" />
+                    </font>
+                </Button>
             </children>
          </AnchorPane>
       </children>

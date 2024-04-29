@@ -11,6 +11,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import edu.esprit.services.LoginService;
+import org.mindrot.jbcrypt.BCrypt;
+
 import java.io.IOException;
 
 
@@ -51,17 +53,22 @@ public class LoginController {
         String pass = password.getText();
 
         User user = loginService.getUserByUsername(userName);
-        if (user != null ) {
+        if (user != null && BCrypt.checkpw(pass, user.getPassword().replace("$2y$", "$2a$"))) {
             username = userName;
             String fxmlFile;
             String role = user.getRole();
+            String password = user.getPassword();
+            boolean ban = !(user.isBanned());
+            System.out.println("Banned status: " + ban);
+            if (ban){switchScene("/Banned.fxml", event);}
+            else {
             if (role.equals("admin")) {
 
                 switchScene("/Uiadmin.fxml", event);
 
             } else if (role.equals("voyageur")) {
                 switchScene("/Uiuser.fxml", event);
-            }
+            }}
 
             //showAlert(Alert.AlertType.INFORMATION, "Login Successful", "Welcome " + user.getUsername() + "!");
 

@@ -11,6 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import edu.esprit.services.UserService;
+import org.mindrot.jbcrypt.BCrypt;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -48,7 +50,10 @@ public class ChangePasswordController implements Initializable {
         }
         else if (!newPassword.equals(confirmNewPassword)) {
             showAlert(Alert.AlertType.ERROR, "Password Mismatch", "The new passwords do not match.");
-        }else { userService.updatePassword(newPasswordField.getText(),ForgetPasswordController.adremail);
+        }else {
+            String password = newPasswordField.getText();
+            String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+            userService.updatePassword(hashedPassword,ForgetPasswordController.adremail);
             showAlert(Alert.AlertType.INFORMATION, "Success", "Password updated successfully.");
 
             switchScene("/login.fxml", event);

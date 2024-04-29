@@ -136,6 +136,19 @@ public class UserService implements EService<User> {
         }
     }
 
+    public boolean updateban(boolean isBanned, String email) {
+        String query = "UPDATE user SET is_banned = ? WHERE email = ?";
+        try (PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(query)) {
+            pst.setBoolean(1, isBanned);
+            pst.setString(2, email);
+            int rowsUpdated = pst.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (SQLException e) {
+            System.out.println("Error updating is_banned status: " + e.getMessage());
+            return false;
+        }
+    }
+
 
     public void updateOTP(String email, String otp) {
         Connection conn = null;
