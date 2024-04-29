@@ -22,6 +22,8 @@ import javafx.util.Callback;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 public class ListeRes
 {
@@ -56,6 +58,8 @@ public class ListeRes
 
     ReservationService reservationService = new ReservationService();
     VoyageService voyageService = new VoyageService();
+    @javafx.fxml.FXML
+    private TextField searchText;
 
     @javafx.fxml.FXML
     public void initialize() {
@@ -153,5 +157,18 @@ public class ListeRes
                 alertDone.showAndWait();
             }
         }
+    }
+
+    @javafx.fxml.FXML
+    public void search(Event event) {
+        String searchTerm = searchText.getText().trim().toLowerCase();
+        List<Reservation> reservations = reservationService.getAll();
+        List<Reservation> searchRes = new ArrayList<>();
+        for (Reservation reservation:reservations){
+            if (reservation.getMail().toLowerCase().contains(searchTerm))
+                searchRes.add(reservation);
+        }
+        tableVoy.getItems().clear();
+        tableVoy.getItems().addAll(searchRes);
     }
 }

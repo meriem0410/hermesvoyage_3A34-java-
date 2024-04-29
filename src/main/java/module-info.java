@@ -12,6 +12,8 @@ module edu.esprit.gestionvoyage {
     requires eu.hansolo.fx.countries;
     requires com.almasb.fxgl.all;
     requires java.sql;
+    requires com.gluonhq.charm.glisten;
+    requires javax.mail.api;
 
     opens edu.esprit.gestionvoyage to javafx.fxml;
     opens edu.esprit.gestionvoyage.controllers to javafx.fxml;

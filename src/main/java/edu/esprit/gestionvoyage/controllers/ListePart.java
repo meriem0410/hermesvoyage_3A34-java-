@@ -21,6 +21,8 @@ import javafx.util.Callback;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class ListePart {
@@ -53,6 +55,8 @@ public class ListePart {
 
     ProgrammeService programmeService = new ProgrammeService();
     VoyageService voyageService = new VoyageService();
+    @javafx.fxml.FXML
+    private TextField searchText;
 
     @javafx.fxml.FXML
     public void initialize() {
@@ -152,5 +156,18 @@ public class ListePart {
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.show();
+    }
+
+    @javafx.fxml.FXML
+    public void search(Event event) {
+        String searchTerm = searchText.getText().trim().toLowerCase();
+        List<Programme> programmes = programmeService.getAll();
+        List<Programme> searchRes = new ArrayList<>();
+        for (Programme programme:programmes){
+            if (programme.getActivite().toLowerCase().contains(searchTerm))
+                searchRes.add(programme);
+        }
+        tableVoy.getItems().clear();
+        tableVoy.getItems().addAll(searchRes);
     }
 }

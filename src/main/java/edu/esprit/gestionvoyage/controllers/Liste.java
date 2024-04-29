@@ -15,6 +15,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class Liste
@@ -47,6 +49,8 @@ public class Liste
     VoyageService voyageService = new VoyageService();
     @javafx.fxml.FXML
     private TableColumn<Voyage, Integer> idCol;
+    @javafx.fxml.FXML
+    private TextField searchText;
 
     @javafx.fxml.FXML
     public void initialize() {
@@ -137,5 +141,18 @@ public class Liste
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.show();
+    }
+
+    @javafx.fxml.FXML
+    public void search(Event event) {
+        String searchTerm = searchText.getText().trim().toLowerCase();
+        List<Voyage> voyages = voyageService.getAll();
+        List<Voyage> searchRes = new ArrayList<>();
+        for (Voyage voyage:voyages){
+            if (voyage.getDestination().toLowerCase().contains(searchTerm))
+                searchRes.add(voyage);
+        }
+        tableVoy.getItems().clear();
+        tableVoy.getItems().addAll(searchRes);
     }
 }
