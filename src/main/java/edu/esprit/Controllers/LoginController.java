@@ -38,6 +38,7 @@ public class LoginController {
 
     @FXML
     private Hyperlink signinbtn;
+    static boolean verified;
 
 
     @FXML
@@ -66,16 +67,19 @@ public class LoginController {
         String pass = password.getText();
 
         User user = loginService.getUserByUsername(userName);
+        verified = userService.getVerified(user.getEmail());
 
         if (user != null && BCrypt.checkpw(pass, user.getPassword().replace("$2y$", "$2a$"))) {
             username = userName;
             String fxmlFile;
             String role = user.getRole();
-            String password = user.getPassword();
             boolean ban = !(user.isBanned());
             boolean verif =(user.isVerified());
+
+
+            System.out.println("ban status : " + ban + "verified status : "+verif);
             mail = (user.getEmail());
-            if (!verif){switchScene("/verif.fxml", event);
+            if (!verified){switchScene("/verif.fxml", event);
             verifyemail(mail);}
             else{
             System.out.println("Banned status: " + ban);
@@ -185,6 +189,7 @@ public class LoginController {
         storedOTP= userService.getOTP(mail);
         String vcode = entredotp.getText();
         System.out.println(storedOTP);
+        User user = userService.getUserByEmail(mail);
         if (storedOTP == null || !(storedOTP.equals(vcode))) {
             warning2.setText("The verification codes do not match!!");
             return;
@@ -194,17 +199,19 @@ public class LoginController {
             alert.setTitle("Verification Successful!");
             alert.setContentText("Your account is verified! Welcome aboard");
             alert.show();
-            User user = loginService.getUserByUsername(LoginController.username);
             String role = user.getRole();
+            user.setVerified(true);
+            boolean updatedSuccessfully = userService.updateverified(true, user.getEmail());
+            System.out.println("verif2 " + user.isVerified());
 
             System.out.println(role);
             // Check the role and switch scene accordingly
-            if (role.equals("admin")) {
+            if (role.equals("Admin")) {
                 switchScene("/Uiadmin.fxml", event);
             } else   {
                 switchScene("/Uiuser.fxml", event);
 
-        }}
+            }}
 
 
     }

@@ -226,6 +226,44 @@ public class UserService implements EService<User> {
     }
 
 
+    public boolean getVerified(String email) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        boolean verified=false;
+
+        try {
+            conn = MyConnection.getInstance().getCnx();
+            String sql = "SELECT verified FROM user WHERE email = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, email);
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                verified = rs.getBoolean("verified");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return verified;
+    }
+    public boolean updateverified(boolean verified , String email) {
+        String query = "UPDATE user SET verified = ? WHERE email = ?";
+        try (PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(query)) {
+            pst.setBoolean(1, verified);
+            pst.setString(2, email);
+            int rowsUpdated = pst.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (SQLException e) {
+            System.out.println("Error updating verified status: " + e.getMessage());
+            return false;
+        }
+    }
+
+
+
+
+
+
 
 
 

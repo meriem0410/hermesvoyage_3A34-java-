@@ -29,6 +29,8 @@ public class UserCardController {
     private Button ban;
     private final UserService userService = new UserService();
 
+    static boolean newBannedStatus;
+
 
 
     private boolean selected = false;
@@ -69,7 +71,7 @@ public class UserCardController {
 
     @FXML
     void banuser(User user) {
-        boolean newBannedStatus = !user.isBanned(); // Toggle the banned status
+        newBannedStatus = !user.isBanned(); // Toggle the banned status
         boolean updatedSuccessfully = userService.updateban(newBannedStatus, user.getEmail());
 
         if (updatedSuccessfully) {
