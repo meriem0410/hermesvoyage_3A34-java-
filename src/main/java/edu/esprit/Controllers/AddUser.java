@@ -147,21 +147,30 @@ public class AddUser {
 
     private void switchScene(String fxmlFile, ActionEvent event) {
         try {
+            // Load the FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent root = loader.load();
 
-            Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
+            // Get the controller associated with the FXML file
+            Object controller = loader.getController();
 
+            // Create a new scene
             Scene scene = new Scene(root);
 
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            // Load the CSS file
+            String css = getClass().getResource("/pagination.css").toExternalForm();
+            scene.getStylesheets().add(css);
 
+            // Get the stage from the event source and set the new scene
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();
 
         } catch (IOException e) {
             e.printStackTrace();
-
         }
     }
+
     @FXML
     void Cancel(ActionEvent event) {
         switchScene("/Uiadmin.fxml", event);

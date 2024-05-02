@@ -261,6 +261,29 @@ public class UserService implements EService<User> {
 
 
 
+    public boolean getban(String email) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        boolean banned=false;
+
+        try {
+            conn = MyConnection.getInstance().getCnx();
+            String sql = "SELECT is_banned FROM user WHERE email = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, email);
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                banned = rs.getBoolean("is_banned");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return banned;
+    }
+
+
+
 
 
 

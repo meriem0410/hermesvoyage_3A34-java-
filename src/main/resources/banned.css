@@ -1,197 +1,59 @@
-* {
-  box-sizing: border-box;
-}
-
-body {
-  font-family: sans-serif;
-  background-image: url("bgimage.jpg");
-  repeat: no-repeat;
-
-}
-
-.txt1 {color: #0070BB;
-  font-size: 40px;
-  font-weight: 800;
-  text-align: center;
-  margin-top: 20px; }
-
-.txt2 {color: #c8c6ce;
-  font-size: 18px;
-  text-align: center;
-  margin-top: 20px; }
-
-.txt3 {color: #c8c6ce;
-  font-size: 18px;
-  text-align: center;
-  margin-top: 20px; }
-
-.logo {
-  text-align: center;
-  margin-top: 10px; }
-
-.button {
-  border: 2px solid none;
-  padding: 10px 40px;
-  background: #0070BB;
-  color: white;
-  text-align: center;
-  width: 300px;
-  border-radius: 25px;
-  margin: 20px auto;
-  transition: all 0.3s ease 0s;
-  -webkit-box-shadow: 0px 11px 20px -8px rgba(0,112,187,1);
-  -moz-box-shadow: 0px 11px 20px -8px rgba(0,112,187,1);
-  box-shadow: 0px 11px 20px -8px rgba(0,112,187,1);}
-
-.button:hover {
-  border: 2px solid none;
-  padding: 10px 40px;
-  background: #0070BB;
-  color: white;
-  text-align: center;
-  width: 300px;
-  border-radius: 25px;
-  margin: 5px auto;
-  transition: all 0.3s ease 0s;
-  -webkit-box-shadow: 0px 19px 34px -8px rgba(0,112,187,1);
-  -moz-box-shadow: 0px 19px 34px -8px rgba(0,112,187,1);
-  box-shadow: 0px 19px 34px -8px rgba(0,112,187,1);}
-
-a .button {
-  color: ffffff;
-  text-align: center;
-  font-size: 16px;
-  text-decoration: none;
-}
-
-a {text-decoration: none;}
-a:hover {text-decoration: none;}
-
-#orbit-system {
-  position: relative;
-  width: 18em;
-  height: 18em;
-  margin: 0px auto;
-}
-
-.system {
-  position: relative;
-  width: 100%;
+html {
   height: 100%;
+}
+body{
+  background-color: #f4f3f5;
+  min-height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg width='42' height='44' viewBox='0 0 42 44' xmlns='http://www.w3.org/2000/svg'%3E%3Cg id='Page-1' fill='none' fill-rule='evenodd'%3E%3Cg id='brick-wall' fill='%236ba184' fill-opacity='0.21'%3E%3Cpath d='M0 0h42v44H0V0zm1 1h40v20H1V1zM0 23h20v20H0V23zm22 0h20v20H22V23z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+svg{
+  transform: scale(0.3,0.3);
+  margin-top:-45%;
+}
+.st0{display:none;}
+.st1{display:inline;fill:#E2E4FA;}
+.st2{display:none;opacity:0.5;}
+.st3{display:inline;fill-rule:evenodd;clip-rule:evenodd;fill:#A8AABA;}
+.st4{display:inline;}
+.st5{fill:#A8AABA;}
+.st6{opacity:0.1;}
+.st7{fill:#2D1C2D;}
+.st8{fill-rule:evenodd;clip-rule:evenodd;fill:#2D1C2D;}
+.st9{fill:#FFFFFF;}
+.st10{fill:#BF3E73;}
+.st11{fill:#8F3157;}
 
-  -webkit-transform: rotateX(75deg) rotateY(-30deg);
-  transform: rotateX(75deg) rotateY(-30deg);
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
+
+
+@keyframes TongueAnim {
+  0% {transform:skewY(0deg);}
+  50% {transform:skewY(10deg);}
+  100% {transform: skewY(-10deg);}
 }
 
-.planet, .satellite-orbit, .satellite {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
+.tongue {
+  animation: TongueAnim .2s ease infinite;
+  transform-origin: top right;
+  transform-box: fill-box;
 }
 
-.planet {
-  width: 9em;
-  height: 9em;
-  margin-top: -20em;
-  margin-left: -4.5em;
-
-  border-radius: 50%;
-  background-color: none;
-  color: white;
-
-  text-align: center;
-  line-height: 9em;
-
-  -webkit-transform: rotateY(30deg) rotateX(-75deg);
-  transform: rotateY(30deg) rotateX(-75deg);
-}
-
-.satellite-orbit {
-  width: 16em;
-  height: 16em;
-  margin-top: -8em;
-  margin-left: -8em;
-
-  /*border: 1px solid black;*/
-  border-radius: 50%;
-
-  -webkit-animation-name: orbit;
-  animation-name: orbit;
-  -webkit-animation-duration: 10s;
-  animation-duration: 10s;
-  -webkit-animation-iteration-count: infinite;
-  animation-iteration-count: infinite;
-  -webkit-animation-timing-function: linear;
-  animation-timing-function: linear;
-}
-
-.satellite {
-  top: 100%;
-  width: 7em;
-  height: 7em;
-  margin-top: -1.5em;
-  margin-left: -1.5em;
-  color: #fefefe;
-  background-color: #0070BB;
-  border-radius: 50%;
-  text-align: center;
-  font-weight: 600;
-  line-height: 7em;
-  -webkit-animation-name: invert-orbit;
-  animation-name: invert-orbit;
-  -webkit-animation-duration: 3s;
-  animation-duration: 3s;
-  -webkit-animation-iteration-count: infinite;
-  animation-iteration-count: infinite;
-  -webkit-animation-timing-function: linear;
-  animation-timing-function: linear;
-}
-
-@-webkit-keyframes orbit {
-  0% {
-    transform: rotateZ(0deg);
-  }
-  100% {
-    transform: rotateZ(360deg);
-  }
-}
-@keyframes orbit {
-  0% {
-    transform: rotateZ(0deg);
-  }
-  100% {
-    transform: rotateZ(360deg);
-  }
-}
-
-/*
-In order to invert the rotation, do the rotate* transforms in reverse order.
-
-Here, we rotated the system with rotateX(75deg) rotateY(-30deg), and then we are animating the rotation of the orbit with rotateZ(0-360deg). To reverse that, we need to reverse the last transform applied (rotateZ), then rotateY, then rotateX.
-
-The rotateX/Y reversal is easy since it's not animated, so just use its opposite (30deg, -75deg). The rotateZ is trickier since it's animating, but since it's rotating from 0 to 360, we just need to animate the satellite from 360 to 0.
-*/
-@-webkit-keyframes invert-orbit {
-  0% {
-    transform: rotateZ(360deg) rotateY(30deg) rotateX(-75deg);
-  }
-
-  100% {
-    transform: rotateZ(0deg) rotateY(30deg) rotateX(-75deg);
-  }
-}
-@keyframes invert-orbit {
-  0% {
-    transform: rotateZ(360deg) rotateY(30deg) rotateX(-75deg);
-  }
-
-  100% {
-    transform: rotateZ(0deg) rotateY(30deg) rotateX(-75deg);
-  }
-}
-
+.st12{fill-rule:evenodd;clip-rule:evenodd;fill:#7EBE9B;}
+.st13{opacity:0.3;fill-rule:evenodd;clip-rule:evenodd;fill:#5F8D75;}
+.st14{opacity:0.6;}
+.st15{fill:#5F8D75;}
+.st16{opacity:0.6;fill:none;stroke:#7EBE9B;stroke-miterlimit:10;}
+.st17{fill:#E7B84D;}
+.st18{fill:none;stroke:#FFFFFF;stroke-width:1.098;stroke-miterlimit:10;}
+.st19{fill:none;}
+.st20{font-family:'Asap-Medium';}
+.st21{font-size:28.6973px;}
+.st22{display:inline;fill:none;}
+.st23{fill:#7091A4;}
+.st24{font-family:'BloggerSans';}
+.st25{font-size:9.72px;}
+.st26{font-family:'Asap-Regular';}
+.st27{font-size:16.524px;}
+.st28{display:inline;fill:#7EBE9B;}
+.st29{font-family:'Asap-Bold';}
+.st30{font-size:10.692px;}
+.st31{fill:#9799A2;}

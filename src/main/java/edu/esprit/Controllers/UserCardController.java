@@ -29,7 +29,6 @@ public class UserCardController {
     private Button ban;
     private final UserService userService = new UserService();
 
-    static boolean newBannedStatus;
 
 
 
@@ -41,22 +40,24 @@ public class UserCardController {
         emailLabel.setText(user.getEmail());
         usernameLabel.setText(user.getUsername());
         roleLabel.setText(user.getRole());
-        if (user.isVerified()) {
-            verifLabel.setText("Yes");
+        if (user.isBanned()) {
+            isBannedLabel.setText("Yes");
             ban.setText("Unban");
             ban.setStyle("-fx-background-color: WHITE; -fx-background-radius: 30;");
             ban.setTextFill(Paint.valueOf("Red"));
         } else {
-            verifLabel.setText("No");
+
+            isBannedLabel.setText("No");
             ban.setText("Ban");
             ban.setStyle("-fx-background-color: RED; -fx-background-radius: 30;");
             ban.setTextFill(Paint.valueOf("White"));
         }
-        if (user.isBanned()) {
-            isBannedLabel.setText("Yes");
+        if (user.isVerified()) {
+            verifLabel.setText("Yes");
+
 
         } else {
-            isBannedLabel.setText("No");
+            verifLabel.setText("No");
         }
 
         ban.setOnAction(event -> banuser(user));
@@ -71,11 +72,15 @@ public class UserCardController {
 
     @FXML
     void banuser(User user) {
-        newBannedStatus = !user.isBanned(); // Toggle the banned status
+        boolean newBannedStatus = !user.isBanned(); // Toggle the banned status
         boolean updatedSuccessfully = userService.updateban(newBannedStatus, user.getEmail());
+        user.setBanned(newBannedStatus);
+        System.out.println("new banned status" + newBannedStatus);
+        System.out.println(user.isBanned());
+
 
         if (updatedSuccessfully) {
-            user.setBanned(newBannedStatus);
+            //user.setBanned(newBannedStatus);
 
             if (user.isBanned()) {
                 ban.setText("Unban");

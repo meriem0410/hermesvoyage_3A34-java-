@@ -1,17 +1,18 @@
 package edu.esprit.Controllers;
 
 import edu.esprit.entities.User;
-
+import edu.esprit.services.LoginService;
 import edu.esprit.services.UserService;
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
 import javafx.event.ActionEvent;
-import javafx.scene.Node;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
-import edu.esprit.services.LoginService;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javax.mail.*;
@@ -39,6 +40,10 @@ public class LoginController {
     @FXML
     private Hyperlink signinbtn;
     static boolean verified;
+    static boolean banusr;
+
+    @FXML
+    private WebView captchaWebView;
 
 
     @FXML
@@ -60,14 +65,46 @@ public class LoginController {
 
 
 
+    public void initialize() {
+        WebEngine engine = captchaWebView.getEngine();
+        engine.load("http://localhost/captcha.html");
+    }
+
+
+
+
+
     @FXML
     void handleLogin(ActionEvent event) {
         warning.setText("");
         String userName = name.getText();
         String pass = password.getText();
 
+        try{
+            WebEngine engine = captchaWebView.getEngine();
+            String result = (String) engine.executeScript(
+                    "function isRecaptchaVerified() {" +
+                            " var isVerified = grecaptcha.getResponse().length > 0;" +
+                            " return String(isVerified);" +
+                            "} " +
+                            "isRecaptchaVerified();"
+            );
+            if(result.equals("false")){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("captcha");
+                alert.setContentText("Please check the captcha.");
+                alert.showAndWait();
+                System.out.println("erreur");
+                return;
+
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
         User user = loginService.getUserByUsername(userName);
         verified = userService.getVerified(user.getEmail());
+        banusr = userService.getban(user.getEmail());
 
         if (user != null && BCrypt.checkpw(pass, user.getPassword().replace("$2y$", "$2a$"))) {
             username = userName;
@@ -83,7 +120,7 @@ public class LoginController {
             verifyemail(mail);}
             else{
             System.out.println("Banned status: " + ban);
-            if (ban){switchScene("/Banned.fxml", event);}
+            if (banusr){switchScene("/Banned.fxml", event);}
             else {
             if (role.equals("admin")) {
 
@@ -237,21 +274,30 @@ public class LoginController {
 
     private void switchScene(String fxmlFile, ActionEvent event) {
         try {
+            // Load the FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent root = loader.load();
 
-            Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
+            // Get the controller associated with the FXML file
+            Object controller = loader.getController();
 
+            // Create a new scene
             Scene scene = new Scene(root);
 
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            // Load the CSS file
+            String css = getClass().getResource("/pagination.css").toExternalForm();
+            scene.getStylesheets().add(css);
 
+            // Get the stage from the event source and set the new scene
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();
 
         } catch (IOException e) {
             e.printStackTrace();
-
         }
     }
+
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
