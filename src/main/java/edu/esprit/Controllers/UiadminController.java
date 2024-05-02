@@ -1,46 +1,84 @@
 package edu.esprit.Controllers;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import edu.esprit.entities.User;
+import edu.esprit.services.UserService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Pagination;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import edu.esprit.entities.User;
-import edu.esprit.services.UserService;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class UiadminController {
 
     @FXML
     private Pagination paginator;
 
-    private final int itemsPerPage = 4; // Number of items per page
-
-    private ObservableList<User> userList = FXCollections.observableArrayList();
-    private ObservableList<VBox> userCards = FXCollections.observableArrayList();
+    @FXML
+    private TextField searchField;
 
     private UserService userService = new UserService();
 
+    private final List<User> userList = new ArrayList<>();
+    private final List<VBox> userCards = new ArrayList<>();
+    private final int itemsPerPage = 4;
+
     @FXML
-    public void initialize() {
+    private void initialize() {
         userList.addAll(userService.getAllData());
 
         // Calculate the number of pages needed
         int pageCount = (int) Math.ceil((double) userList.size() / itemsPerPage);
         paginator.setPageCount(pageCount);
         paginator.setPageFactory(this::createPage);
+
+        // Add a listener to the search field to update the pagination when the text changes
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> updatePagination());
+    }
+
+    private void updatePagination() {
+        String searchText = searchField.getText().toLowerCase();
+
+        // Filter the userList based on the search text
+        List<User> filteredList = userList.stream()
+                .filter(user -> user.getEmail().toLowerCase().contains(searchText)) // Assuming name is a property of User class
+                .collect(Collectors.toList());
+
+        // Calculate the number of pages needed for the filtered list
+        int pageCount = (int) Math.ceil((double) filteredList.size() / itemsPerPage);
+        paginator.setPageCount(pageCount);
+        paginator.setPageFactory(pageIndex -> createPage(pageIndex, filteredList));
     }
 
     private VBox createPage(int pageIndex) {
+        int startIndex = pageIndex * itemsPerPage;
+        int endIndex = Math.min(startIndex + itemsPerPage, userList.size());
+
+        userCards.clear();
+
+        for (int i = startIndex; i < endIndex; i++) {
+            loadUserCard(userList.get(i));
+        }
+
+        FlowPane pageContent = new FlowPane();
+        pageContent.setHgap(10);
+        pageContent.setVgap(10);
+        pageContent.getChildren().addAll(userCards);
+
+        return new VBox(pageContent);
+    }
+
+    private VBox createPage(int pageIndex, List<User> userList) {
         int startIndex = pageIndex * itemsPerPage;
         int endIndex = Math.min(startIndex + itemsPerPage, userList.size());
 
@@ -82,6 +120,7 @@ public class UiadminController {
 
     @FXML
     private void logout(ActionEvent event) {
+        UserSession.setUser(null);
         switchScene("/login.fxml", event);
     }
 
@@ -92,6 +131,7 @@ public class UiadminController {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -107,6 +107,7 @@ public class LoginController {
         banusr = userService.getban(user.getEmail());
 
         if (user != null && BCrypt.checkpw(pass, user.getPassword().replace("$2y$", "$2a$"))) {
+            UserSession.setUser(user);
             username = userName;
             String fxmlFile;
             String role = user.getRole();

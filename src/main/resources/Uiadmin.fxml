@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="root" prefHeight="787.0" prefWidth="936.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.Controllers.UiadminController">
@@ -36,14 +37,16 @@
                     </ButtonBar>
                     <HBox layoutX="89.0" prefHeight="50.0" prefWidth="526.0">
                         <children>
-                            <Label text="- Bienvenue -" textAlignment="CENTER" textFill="#8ac0b6" HBox.hgrow="NEVER">
-                                <font>
-                                    <Font name="Arial Italic" size="20.0" />
-                                </font>
-                                <HBox.margin>
-                                    <Insets left="10.0" top="11.0" />
-                                </HBox.margin>
-                            </Label>
+                     <Pane prefHeight="50.0" prefWidth="581.0">
+                        <children>
+                                  <Label layoutY="14.0" text="- Bienvenue -" textAlignment="CENTER" textFill="#8ac0b6">
+                                      <font>
+                                          <Font name="Arial Italic" size="20.0" />
+                                      </font>
+                                  </Label>
+                                  <TextField fx:id="searchField" layoutX="281.0" layoutY="12.0" prefHeight="26.0" prefWidth="255.0" promptText="Email" style="-fx-background-color: #3f3f40; -fx-text-fill: #fbfcfa;" />
+                        </children>
+                     </Pane>
                         </children>
                     </HBox>
                     <Pagination fx:id="paginator" layoutX="88.0" layoutY="116.0" prefHeight="464.0" prefWidth="574.0">
@@ -62,6 +65,7 @@
                             <Font name="System Bold" size="22.0" />
                         </font>
                     </Button>
+               <Label fx:id="userinfo" layoutX="46.0" layoutY="563.0" prefHeight="18.0" prefWidth="142.0" />
                 </children>
             </AnchorPane>
         </AnchorPane>

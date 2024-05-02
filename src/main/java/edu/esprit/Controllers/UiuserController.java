@@ -1,5 +1,6 @@
 package edu.esprit.Controllers;
 
+import edu.esprit.entities.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,15 +12,34 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-public class UiuserController  {
+public class UiuserController {
 
     @FXML
     private Button logout;
 
-
     @FXML
     private Label greetingText;
 
+    @FXML
+    public void initialize() {
+        // Retrieve user information from UserSession
+        User loggedInUser = UserSession.getUser();
+
+        if (loggedInUser != null) {
+            // Display greeting with username
+            greetingText.setText("Welcome " + loggedInUser.getUsername());
+        } else {
+            // Handle case where user is not logged in
+            greetingText.setText("Welcome Guest");
+        }
+    }
+
+    @FXML
+    private void logout(ActionEvent event) {
+        // Clear user session upon logout
+        UserSession.setUser(null);
+        switchScene("/login.fxml", event);
+    }
 
     private void switchScene(String fxmlFile, ActionEvent event) {
         try {
@@ -33,15 +53,4 @@ public class UiuserController  {
             e.printStackTrace();
         }
     }
-    @FXML
-    public void initialize() {
-        greetingText.setText("Welcome " + LoginController.username);
-    }
-
-    @FXML
-    private void logout(ActionEvent event) {
-        switchScene("/login.fxml", event);
-    }
-
-
 }
