@@ -11,13 +11,25 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+
+
+import javafx.scene.control.Alert;
+
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 
 public class Liste
 {
@@ -154,5 +166,55 @@ public class Liste
         }
         tableVoy.getItems().clear();
         tableVoy.getItems().addAll(searchRes);
+    }
+
+
+    @javafx.fxml.FXML
+    private void imprimerPDF(ActionEvent event) {
+        ObservableList<Voyage> voyages = tableVoy.getItems();
+
+        // Créer un sélecteur de fichier pour choisir où enregistrer le PDF
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Enregistrer le PDF");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Fichier PDF", "*.pdf"));
+        File selectedFile = fileChooser.showSaveDialog(new Stage());
+
+        if (selectedFile != null) {
+            try {
+                // Créer un document PDF
+                Document document = new Document();
+                PdfWriter.getInstance(document, new FileOutputStream(selectedFile));
+
+                // Ouvrir le document pour écrire
+                document.open();
+
+                // Écrire les données des voyages dans le document
+                for (Voyage voyage : voyages) {
+                    document.add(new Paragraph("Destination: " + voyage.getDestination()));
+                    document.add(new Paragraph("Prix: " + voyage.getPrix()));
+                    document.add(new Paragraph("Date: " + voyage.getDate()));
+                    document.add(new Paragraph("Type: " + voyage.getType()));
+                    document.add(new Paragraph(" "));
+                }
+
+                // Fermer le document
+                document.close();
+
+                // Afficher un message de succès
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("PDF généré");
+                alert.setHeaderText(null);
+                alert.setContentText("Le PDF a été généré avec succès.");
+                alert.showAndWait();
+            } catch (IOException | DocumentException e) {
+                // Gérer les erreurs
+                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur");
+                alert.setHeaderText(null);
+                alert.setContentText("Une erreur s'est produite lors de la génération du PDF.");
+                alert.showAndWait();
+            }
+        }
     }
 }

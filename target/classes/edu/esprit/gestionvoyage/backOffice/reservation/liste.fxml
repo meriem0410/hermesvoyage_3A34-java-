@@ -102,7 +102,7 @@
                         <Insets left="10.0" top="11.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField prefHeight="26.0" prefWidth="230.0" promptText="Search" style="-fx-background-color: #3f3f40; -fx-text-fill: #fbfcfa;" HBox.hgrow="NEVER">
+                  <TextField fx:id="searchText" onKeyReleased="#search" prefHeight="26.0" prefWidth="230.0" promptText="Search" style="-fx-background-color: #3f3f40; -fx-text-fill: #fbfcfa;" HBox.hgrow="NEVER">
                      <HBox.margin>
                         <Insets left="375.0" top="11.0" />
                      </HBox.margin>
