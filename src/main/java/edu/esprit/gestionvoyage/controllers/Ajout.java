@@ -14,9 +14,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.sql.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class Ajout {
     @javafx.fxml.FXML
@@ -131,6 +129,14 @@ public class Ajout {
         Map<String, String> validationErrors = new HashMap<>();
         if (destInput.getText() == null || Objects.equals(destInput.getText(), "")) {
             validationErrors.put("destination", "Veuillez indiquer une destination.");
+        } else {
+            List<String> listOfDestinations = new ArrayList<>();
+            for (Voyage voyage : voyageService.getAll()) {
+                listOfDestinations.add(voyage.getDestination());
+            }
+            if (listOfDestinations.contains(destInput.getText())){
+                validationErrors.put("destination", "Cette destination existe déjà.");
+            }
         }
         if (prixInput.getText() == null || Objects.equals(prixInput.getText(), "")) {
             validationErrors.put("prix", "Veuillez indiquer un prix.");

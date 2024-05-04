@@ -15,6 +15,7 @@ module edu.esprit.gestionvoyage {
     requires com.gluonhq.charm.glisten;
     requires javax.mail.api;
     requires itextpdf;
+    requires twilio;
 
     opens edu.esprit.gestionvoyage to javafx.fxml;
     opens edu.esprit.gestionvoyage.controllers to javafx.fxml;
