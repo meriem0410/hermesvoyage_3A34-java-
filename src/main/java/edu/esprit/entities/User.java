@@ -8,6 +8,7 @@ public class User {
     private String role;
     private boolean verified;
     private boolean isBanned;
+    private byte[] pictureData;
 
     // Constructors
     public User() {
@@ -78,6 +79,17 @@ public class User {
 
     public void setBanned(boolean banned) {
         isBanned = banned;
+    }
+
+
+    // Constructor, getters, setters, and other methods
+
+    public byte[] getPictureData() {
+        return pictureData;
+    }
+
+    public void setPictureData(byte[] pictureData) {
+        this.pictureData = pictureData;
     }
 
     // toString method

@@ -8,8 +8,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -26,6 +28,8 @@ public class UiadminController {
 
     @FXML
     private TextField searchField;
+    @FXML
+    private Button profile;
 
     private UserService userService = new UserService();
 
@@ -124,6 +128,20 @@ public class UiadminController {
         switchScene("/login.fxml", event);
     }
 
+
+
+    @FXML
+    private void gotoprofile(ActionEvent event) {
+        switchScene("/profile.fxml", event);
+    }
+
+
+    @FXML
+    private void goback(MouseEvent event) {
+
+            switchScene("/profileuser.fxml", event);
+        }
+
     private void switchScene(String fxmlFile, ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
@@ -135,5 +153,20 @@ public class UiadminController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void switchScene(String fxmlFile, MouseEvent event) {
+
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

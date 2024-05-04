@@ -10,9 +10,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 
-public class UiuserController {
+public class ProfileAdminController {
+
 
     @FXML
     private Button logout;
@@ -22,6 +24,9 @@ public class UiuserController {
 
     @FXML
     private Button profilebtn;
+
+    @FXML
+    private Button dashboard;
 
     @FXML
     public void initialize() {
@@ -35,6 +40,12 @@ public class UiuserController {
             // Handle case where user is not logged in
             greetingText.setText("Welcome Guest");
         }
+    }
+
+    @FXML
+    private void gotodashboard(ActionEvent event){
+
+        switchScene("/Uiadmin.fxml", event);
     }
 
     @FXML
@@ -52,8 +63,21 @@ public class UiuserController {
 
     private void switchScene(String fxmlFile, ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
+            // Load the FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent root = loader.load();
+
+            // Get the controller associated with the FXML file
+            Object controller = loader.getController();
+
+            // Create a new scene
             Scene scene = new Scene(root);
+
+            // Load the CSS file
+            String css = getClass().getResource("/pagination.css").toExternalForm();
+            scene.getStylesheets().add(css);
+
+            // Get the stage from the event source and set the new scene
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();

@@ -10,10 +10,16 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import edu.esprit.services.UserService;
 import edu.esprit.utiles.MyConnection;
 import org.mindrot.jbcrypt.BCrypt;
+
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,6 +28,8 @@ import java.util.regex.Pattern;
 
 public class RegisterUserController {
 
+
+    voyageur voy = new voyageur();
 
 
     @FXML
@@ -42,6 +50,12 @@ public class RegisterUserController {
     @FXML
     private Button loginbtn;
 
+    @FXML
+    private Button uploadPictureButton;
+    static byte[] picture;
+    private static final String DEFAULT_PICTURE_PATH = "resources/default_picture.png";
+
+
 
     private final UserService userService = new UserService();
     @FXML
@@ -54,6 +68,9 @@ public class RegisterUserController {
     private Label wrpsc;
     @FXML
     private Label wrcheck;
+    @FXML
+    private ImageView prevpic;
+
 
 
 
@@ -116,25 +133,27 @@ public class RegisterUserController {
 
 
 
-
-
-
-
-
-
-
-
             if ((wrusr.getText().equals("")) && (wrps.getText().equals("")) && (wremail.getText().equals("")) &&
                     (wrcheck.getText().equals("")) && (wrpsc.getText().equals("")) )
-                { voyageur voy = new voyageur();
+                {
                     String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
                     voy.setEmail(email);
                     voy.setUsername(username);
                     voy.setPassword(hashedPassword);
                     voy.setRole("voyageur");
-                    userService.addEntity(voy);
                     voy.setBanned(false);
                     voy.setVerified(false);
+                    if (picture!=null)
+                    {voy.setPictureData(picture);}
+                    else {
+                        File defaultPictureFile = new File(DEFAULT_PICTURE_PATH);
+                        FileInputStream fis = new FileInputStream(defaultPictureFile);
+                        byte[] defaultPictureData = new byte[(int) defaultPictureFile.length()];
+                        fis.read(defaultPictureData);
+                        fis.close();
+
+                        voy.setPictureData(defaultPictureData);}
+                    userService.addEntity(voy);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Success");
                 alert.setContentText("Signed Up! Please verify your account");
@@ -161,6 +180,31 @@ public class RegisterUserController {
         } catch (Exception e) {
             // Show error message
             System.out.println(e.getStackTrace());
+        }
+    }
+
+    @FXML
+    void uploadPicture(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose Picture");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif")
+        );
+        File selectedFile = fileChooser.showOpenDialog(((Node) event.getSource()).getScene().getWindow());
+
+        if (selectedFile != null) {
+            try {
+                FileInputStream fis = new FileInputStream(selectedFile);
+                byte[] data = new byte[(int) selectedFile.length()];
+                fis.read(data);
+                fis.close();
+                picture = data;
+                voy.setPictureData(picture);
+                Image image = new Image(selectedFile.toURI().toString());
+                prevpic.setImage(image);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

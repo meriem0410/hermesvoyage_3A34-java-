@@ -15,13 +15,17 @@ public class UserService implements EService<User> {
 
     @Override
     public void addEntity(User user) {
-        String requete = "INSERT INTO `user`(`username`, `email`, `password`,`role`,`verified`,`is_banned`) VALUES (?,?,?,?,0,0)";
+        String requete = "INSERT INTO `user`(`username`, `email`, `password`,`role`,`verified`,`is_banned`, `profile_picture`) VALUES (?,?,?,?,?,?,?)";
         try {
             PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(requete);
             pst.setString(1, user.getUsername());
             pst.setString(2, user.getEmail());
             pst.setString(3, user.getPassword());
             pst.setString(4, user.getRole());
+            pst.setBoolean(5, user.isVerified());
+            pst.setBoolean(6, user.isBanned());
+            pst.setBytes(7, user.getPictureData());
+
 
 
 
@@ -187,6 +191,49 @@ public class UserService implements EService<User> {
             return false;
         }
     }
+
+    public byte[] getProfilePictureData(String email) {
+        byte[] profilePictureData = null;
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = MyConnection.getInstance().getCnx();
+            stmt = conn.prepareStatement("SELECT profile_picture FROM user WHERE email = ?");
+            stmt.setString(1, email);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                profilePictureData = rs.getBytes("profile_picture");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Close resources in a finally block to ensure they are closed even if an exception occurs
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            // Connection should not be closed here to allow subsequent database operations
+            // The connection should be managed externally
+        }
+
+        return profilePictureData;
+    }
+
+
+
 
 
     public void updateOTP(String email, String otp) {
