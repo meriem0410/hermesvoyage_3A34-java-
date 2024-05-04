@@ -9,7 +9,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.GestionTransport.Controller.Transport.StatisticsController">
    <children>
-      <BarChart fx:id="barChart" layoutX="31.0" layoutY="25.0" prefHeight="350.0" prefWidth="500.0" style="-fx-bar-fill: blue; -fx-border-color: green;" title="Les statistique de transport selon tickets ">
+      <BarChart fx:id="barChart" layoutX="31.0" layoutY="25.0" prefHeight="350.0" prefWidth="500.0" title="Les statistique de transport selon tickets ">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>

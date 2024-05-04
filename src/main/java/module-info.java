@@ -7,6 +7,7 @@ module edu.esprit.GestionTransport {
     requires com.jfoenix;
 
     requires java.mail;
+    requires com.gluonhq.charm.glisten;
     // Autres déclarations nécessaires
 
 

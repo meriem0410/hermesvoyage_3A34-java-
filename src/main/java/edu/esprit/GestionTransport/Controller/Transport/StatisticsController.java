@@ -35,6 +35,7 @@ public class StatisticsController implements Initializable {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.getData().add(new XYChart.Data<>("Bus", ticketsEnBus));
         series.getData().add(new XYChart.Data<>("Train", ticketsEnTrain));
+        series.getData().add(new XYChart.Data<>("avoin", ticketsEnTrain));
         // Ajoutez les séries de données au BarChart
         barChart.getData().add(series);
 

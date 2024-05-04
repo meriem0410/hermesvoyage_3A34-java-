@@ -12,11 +12,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import edu.esprit.GestionTransport.Entity.SessionManager;
 import edu.esprit.GestionTransport.Entity.Transport;
@@ -26,12 +24,15 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.scene.control.Button;
+
 
 public class FrontTransport implements Initializable {
 
     @FXML
     private Button voirtickets;
+    @FXML
+    private VBox transportVBox;
+
 
     @FXML
     private Button VoirStatistiquesButton ;
@@ -61,16 +62,7 @@ public class FrontTransport implements Initializable {
         addTransportShowListData();
     }
 
-    private void addTransportShowListData() {
-        TransportService transportService = new TransportService();
-        List<Transport> transportList = transportService.getAllTransports();
 
-        transport_cell_id.setCellValueFactory(new PropertyValueFactory<>("id"));
-        transport_cell_type.setCellValueFactory(new PropertyValueFactory<>("typeTransport"));
-        transport_cell_description.setCellValueFactory(new PropertyValueFactory<>("description"));
-
-        transportTableView.getItems().addAll(transportList);
-    }
 
     @FXML
     private void handleDeleteButtonAction(ActionEvent event) {
@@ -228,6 +220,30 @@ public class FrontTransport implements Initializable {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
+    } private void addTransportShowListData() {
+        TransportService transportService = new TransportService();
+        List<Transport> transportList = transportService.getAllTransports();
+
+        Accordion accordion = new Accordion(); // Créer un nouvel Accordion
+
+        for (Transport transport : transportList) {
+            TitledPane titledPane = new TitledPane();
+            titledPane.setText(transport.getTypeTransport());
+
+            // Création d'un contenu personnalisé pour le TitledPane
+            VBox content = new VBox();
+            Label descriptionLabel = new Label("Description: " + transport.getDescription());
+            content.getChildren().add(descriptionLabel);
+
+            titledPane.setContent(content);
+
+            accordion.getPanes().add(titledPane); // Ajouter le TitledPane à l'Accordion
+        }
+
+        // Ajouter l'Accordion à votre VBox existant
+        transportVBox.getChildren().add(accordion);
     }
 
 }
+
+

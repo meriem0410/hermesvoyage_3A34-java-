@@ -1,38 +1,37 @@
 package edu.esprit.GestionTransport.Controller.Tickets;
-
+import com.gluonhq.charm.glisten.control.CardPane;
+import com.gluonhq.charm.glisten.control.CardCell;
 import edu.esprit.GestionTransport.Entity.Tickets;
 import edu.esprit.GestionTransport.Service.TicketService;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Properties;
-
-import javafx.scene.control.Button;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
+import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.io.IOException;
+import java.util.List;
+import java.util.Objects;
+import java.util.Properties;
+
 
 public class FrontTickets {
+
     @FXML
     private Button reserveTicketButton;
-    @FXML
-    private Button RetourButton ;
 
     @FXML
     private TableView<Tickets> ticketsTableView;
@@ -52,49 +51,76 @@ public class FrontTickets {
     @FXML
     private TableColumn<Tickets, Double> tickets_cell_prix;
 
+    @FXML
+    private CardPane ListTickets;
+
     private final TicketService ticketService = new TicketService(); // Inject your TicketService here
 
-    // Initialize method to load data into TableView
     @FXML
     public void initialize() {
-        // Set cell value factories for each column
-        tickets_cell_id.setCellValueFactory(new PropertyValueFactory<>("id"));
-        tickets_cell_depart.setCellValueFactory(new PropertyValueFactory<>("depart"));
-        tickets_cell_arrive.setCellValueFactory(new PropertyValueFactory<>("arrive"));
-        tickets_cell_type.setCellValueFactory(new PropertyValueFactory<>("typeTransport"));
-        tickets_cell_prix.setCellValueFactory(new PropertyValueFactory<>("prix"));
-
-        // Load tickets data into TableView
-        loadTicketsData();
+        List<Tickets> ticketsList = ticketService.getAllTickets();
+        for (Tickets ticket : ticketsList) {
+            HBox hBox = createTicketsCard(ticket);
+            ListTickets.getItems().add(hBox); // Ajoutez au TableView, pas à la liste de tickets
+        }
     }
 
-    // Method to load data into TableView
+    private HBox createTicketsCard(Tickets ticket) {
+        ImageView imageView = new ImageView();
+        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/edu/esprit/Transport/asset/téléchargement.jpg")));
+        imageView.setImage(image);
+
+        Label departLabel = new Label("Depart: " + ticket.getDepart());
+        Label arriveLabel = new Label("Arrive: " + ticket.getArrive());
+        Label prixLabel = new Label("prix: " + ticket.getPrix());
+        Label typeLabel = new Label("Type de transport: " + ticket.getTypeTransport());
+
+        // Je suppose que vous voulez afficher les détails du ticket dans une seule HBox, donc vous pouvez les ajouter à un VBox
+        VBox vBox = new VBox(departLabel, arriveLabel, prixLabel, typeLabel);
+        HBox hBox = new HBox(imageView, vBox); // Ajoutez l'image et le VBox dans une HBox
+        hBox.setSpacing(10); // Définissez l'espacement entre les éléments de la HBox
+
+        hBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                // Your action when the HBox is clicked
+                System.out.println("HBox clicked!");
+                handleReserveTicketButtonAction(ticket);
+            }
+        });
+
+        return hBox;
+    }
+
+
     private void loadTicketsData() {
         List<Tickets> ticketsList = ticketService.getAllTickets();
         ticketsTableView.getItems().addAll(ticketsList);
     }
 
-    // Method to handle reservation button action
 
-    @FXML
-    private void handleReserveTicketButtonAction(ActionEvent event) {
-        Tickets selectedTicket = ticketsTableView.getSelectionModel().getSelectedItem();
+    private void handleReserveTicketButtonAction(Tickets selectedTicket) {
+        //Tickets selectedTicket = ticketsTableView.getSelectionModel().getSelectedItem();
+        //selectedTicket = ListTickets.focu
+        //ListTickets.setOnMouseClicked();
 
         if (selectedTicket == null) {
             showAlert("Error", "Please select a ticket to reserve.");
             return;
         }
 
-        // Envoyer un email
-        String destinataire = "louay2.khelifi@gmail.com";
+        String destinataire = "jridim64@gmail.com";
         String sujet = "Réservation de ticket";
-        String contenu = "Vous avez réservé le ticket avec l'ID : " + selectedTicket.getId();
+        String contenu = "<h1>Réservation de ticket</h1>"
+                + "<p><strong>Vous avez réservé le ticket avec l'ID :</strong> " + selectedTicket.getId() + "</p>"
+                + "<p><strong>et de départ :</strong> " + escapeHtml(selectedTicket.getDepart()) + "</p>"
+                + "<p><strong>et de arrive :</strong> " + escapeHtml(selectedTicket.getArrive()) + "</p>"
+                + "<p><strong>et de type de Transport :</strong> " + escapeHtml(selectedTicket.getTypeTransport()) + "</p>"
+                + "<p><strong>et de prix :</strong> " + selectedTicket.getPrix() + "</p>";
 
-        // Remplacez "VotreAdresseEmail" par votre adresse e-mail Gmail
         String adresseExpeditrice = "slimenachref01@gmail.com";
         String motDePasse = "jkhi eeyp wpfz egyp";
 
-        // Configuration de la session JavaMail
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
@@ -109,15 +135,12 @@ public class FrontTickets {
                 });
 
         try {
-            // Création du message
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(adresseExpeditrice));
-            message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse(destinataire));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinataire));
             message.setSubject(sujet);
-            message.setText(contenu);
+            message.setContent(contenu, "text/html; charset=utf-8");
 
-            // Envoi du message
             Transport.send(message);
 
             showAlert("Success", "L'e-mail de confirmation a été envoyé avec succès.");
@@ -127,7 +150,6 @@ public class FrontTickets {
         }
     }
 
-    // Method to show alert dialog
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -135,6 +157,7 @@ public class FrontTickets {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
     @FXML
     private void handleRetourButtonAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/esprit/Transport/FrontTransport.fxml"));
@@ -145,6 +168,11 @@ public class FrontTickets {
         stage.show();
     }
 
-
-    // Add more methods for other functionalities as needed
+    private String escapeHtml(String input) {
+        return input.replaceAll("&", "&amp;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll("\"", "&quot;")
+                .replaceAll("'", "&#39;");
+    }
 }

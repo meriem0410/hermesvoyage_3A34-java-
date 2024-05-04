@@ -8,40 +8,97 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.image.ImageView?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.GestionTransport.Controller.Transport.AjouterTransport">
+<?import javafx.scene.image.Image?>
+<AnchorPane prefHeight="600.0" prefWidth="960.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.GestionTransport.Controller.Transport.AjouterTransport">
    <children>
-      <Label text="Ajouter Transports">
-         <font>
-            <Font name="System Bold" size="23.0" />
-         </font>
-         <VBox.margin>
-            <Insets bottom="40.0" />
-         </VBox.margin>
-      </Label>
-      <Label text="Type transport" />
-      <TextField fx:id="addType" />
-      <Label text="Description " />
-      <TextArea fx:id="addDescription" prefHeight="200.0" prefWidth="200.0" />
-      <Label fx:id="errorLabel" />
-      <Button fx:id="AddTransport" mnemonicParsing="false" onAction="#handleAddTransportButtonAction" text="Add">
-         <padding>
-            <Insets left="30.0" right="30.0" />
-         </padding></Button>
-      <Button fx:id="Clear" mnemonicParsing="false" onAction="#handleClear" text="Clear">
-         <padding>
-            <Insets left="20.0" right="30.0" />
-         </padding>
-         <VBox.margin>
-            <Insets top="10.0" />
-         </VBox.margin></Button>
-      <Button fx:id="RetourButton" mnemonicParsing="false" onAction="#handleRetourButtonAction" text="Retour">
-         <VBox.margin>
-            <Insets top="10.0" />
-         </VBox.margin>
-      </Button>
+      <HBox prefHeight="600.0" prefWidth="200.0" style="-fx-background-color: #8ac0b6;">
+         <children>
+            <VBox alignment="CENTER_LEFT" prefHeight="600.0" prefWidth="200.0" HBox.hgrow="NEVER">
+               <children>
+                  <ImageView fitHeight="79.0" fitWidth="162.0" pickOnBounds="true" preserveRatio="true">
+                     <viewport>
+                        <Rectangle2D />
+                     </viewport>
+                     <image>
+                        <Image url="@../../esprit/Transport/asset/logo.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets bottom="130.0" top="10.0" />
+                     </VBox.margin>
+                  </ImageView>
+               </children>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </VBox>
+         </children>
+      </HBox>
+      <VBox layoutX="200.0" prefHeight="50.0" prefWidth="760.0" style="-fx-background-color: #fbfcfa;">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="NEVER">
+               <children>
+                  <Label text="- Bienvenue -" textAlignment="CENTER" textFill="#8ac0b6" HBox.hgrow="NEVER">
+                     <font>
+                        <Font name="Arial Italic" size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" top="11.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField prefHeight="26.0" prefWidth="230.0" promptText="Search" style="-fx-background-color: #3f3f40; -fx-text-fill: #fbfcfa;" HBox.hgrow="NEVER">
+                     <HBox.margin>
+                        <Insets left="375.0" top="11.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox layoutX="200.0" layoutY="50.0" prefHeight="550.0" prefWidth="760.0" style="-fx-background-color: #f2f2f2;">
+         <children>
+            <VBox prefHeight="662.0" prefWidth="739.0" style="-fx-border-color: #8ac0b6;" VBox.vgrow="NEVER">
+               <children>
+                  <Label text="Ajouter Transports">
+                     <font>
+                        <Font name="System Bold" size="23.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="40.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label text="Type transport" />
+                  <TextField fx:id="addType" />
+                  <Label text="Description " />
+                  <TextArea fx:id="addDescription" prefHeight="200.0" prefWidth="200.0" />
+                  <Label fx:id="errorLabel" />
+                  <HBox spacing="20.0" alignment="CENTER">
+                     <Button fx:id="AddTransport" mnemonicParsing="false" onAction="#handleAddTransportButtonAction" text="Add">
+                        <padding>
+                           <Insets left="30.0" right="30.0" />
+                        </padding>
+                     </Button>
+                     <Button fx:id="Clear" mnemonicParsing="false" onAction="#handleClear" text="Clear">
+                        <padding>
+                           <Insets left="20.0" right="30.0" />
+                        </padding>
+                        <VBox.margin>
+                           <Insets top="10.0" />
+                        </VBox.margin>
+                     </Button>
+                     <Button fx:id="RetourButton" mnemonicParsing="false" onAction="#handleRetourButtonAction" text="Retour">
+                     </Button>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets bottom="40.0" left="60.0" right="60.0" top="40.0" />
+               </padding>
+            </VBox>
+         </children>
+      </VBox>
    </children>
-   <padding>
-      <Insets bottom="40.0" left="60.0" right="60.0" top="40.0" />
-   </padding>
-</VBox>
+</AnchorPane>

@@ -1,34 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import com.gluonhq.charm.glisten.control.CardPane?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.GestionTransport.Controller.Tickets.FrontTickets">
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
+<AnchorPane prefHeight="600.0" prefWidth="960.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.GestionTransport.Controller.Tickets.FrontTickets">
    <children>
-      <Pane layoutX="17.0" layoutY="10.0" prefHeight="400.0" prefWidth="593.0">
+      <HBox prefHeight="600.0" prefWidth="200.0" style="-fx-background-color: #8ac0b6;">
          <children>
-            <TableView fx:id="ticketsTableView" layoutX="85.0" layoutY="35.0" prefHeight="200.0" prefWidth="372.0">
-               <columns>
-                  <TableColumn fx:id="tickets_cell_id" prefWidth="75.0" text="ID" />
-                  <TableColumn fx:id="tickets_cell_depart" prefWidth="75.0" text="Depart" />
-                  <TableColumn fx:id="tickets_cell_arrive" prefWidth="75.0" text="Arirve" />
-                  <TableColumn fx:id="tickets_cell_prix" prefWidth="75.0" text="Prix" />
-                  <TableColumn fx:id="tickets_cell_type" prefWidth="75.0" text="Type" />
-               </columns>
-            </TableView>
-            <Text layoutX="160.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="La liste des tickets">
+            <ImageView fitHeight="79.0" fitWidth="162.0" pickOnBounds="true" preserveRatio="true">
+               <viewport>
+                  <Rectangle2D />
+               </viewport>
+               <image>
+                  <Image url="@../../esprit/Transport/asset/logo.png" />
+               </image>
+               <VBox.margin>
+                  <Insets bottom="130.0" top="-170.0" />
+               </VBox.margin>
+            </ImageView>
+         </children>
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+         <padding>
+            <Insets left="20.0" />
+         </padding>
+      </HBox>
+      <VBox layoutX="200.0" prefHeight="50.0" prefWidth="760.0" style="-fx-background-color: #fbfcfa;">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="NEVER">
+               <children>
+                  <Label text="- Bienvenue -" textAlignment="CENTER" textFill="#8ac0b6" HBox.hgrow="NEVER">
+                     <font>
+                        <Font name="Arial Italic" size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" top="11.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField prefHeight="26.0" prefWidth="230.0" promptText="Search" style="-fx-background-color: #3f3f40; -fx-text-fill: #fbfcfa;" HBox.hgrow="NEVER">
+                     <HBox.margin>
+                        <Insets left="375.0" top="11.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox layoutX="200.0" layoutY="50.0" prefHeight="550.0" prefWidth="760.0" style="-fx-background-color: #f2f2f2;">
+
+
+         <children>
+            <HBox alignment="CENTER" spacing="20">
+            <Text layoutX="100.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="60.0" text="La liste des Tickets">
                <font>
-                  <Font name="System Bold Italic" size="26.0" />
+                  <Font name="System Bold Italic" size="24.0" />
                </font>
             </Text>
-            <Button fx:id="reserveTicketButton" layoutX="208.0" layoutY="254.0" mnemonicParsing="false" onAction="#handleReserveTicketButtonAction" text="Reserver" />
-            <Button fx:id="RetourButton" layoutX="283.0" layoutY="254.0" mnemonicParsing="false" onAction="#handleRetourButtonAction" text="Retour" />
+            </HBox>
+                  <CardPane fx:id="ListTickets"/>
+               </children>
+
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+         <HBox alignment="CENTER" spacing="20">
+               <Button fx:id="RetourButton" layoutX="400.0" layoutY="254.0" mnemonicParsing="false" onAction="#handleRetourButtonAction" text="Retour" prefWidth="500" style="-fx-background-color: lightgreen;"/>
+         </HBox>
+      </VBox>
          </children>
-      </Pane>
-   </children>
+
+
 </AnchorPane>
