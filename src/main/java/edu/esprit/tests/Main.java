@@ -15,7 +15,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader fxmlloader = new FXMLLoader(Main.class.getResource("/AfficherLogF.fxml"));
+        FXMLLoader fxmlloader = new FXMLLoader(Main.class.getResource("/AfficherLogement.fxml"));
         Parent root = fxmlloader.load();
         primaryStage.setScene(new Scene(root));
         primaryStage.show();

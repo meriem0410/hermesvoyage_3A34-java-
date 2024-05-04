@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="edu.esprit.gui.VoucherGenerator">
+
+    <Label text="----------------- Voucher -----------------" />
+
+    <Label text="                Reservation                " />
+
+    <VBox fx:id="V1" layoutX="6.0" prefHeight="267.0" prefWidth="298.0" spacing="5" style="-fx-padding: 10px;">
+        <Label fx:id="labelDate_Facture" prefHeight="18.0" prefWidth="305.0" text="Date de checkin:" />
+        <Label fx:id="labelNomPrenimClient" prefHeight="18.0" prefWidth="332.0" text="Date de checkout:" />
+        <Label fx:id="labelAdresse" prefHeight="18.0" prefWidth="329.0" text="Nombre d'hôtes :" />
+        <Label fx:id="labelDate_Livraison" prefHeight="18.0" prefWidth="317.0" text="Adresse de l'Hebergement:" />
+        <Label fx:id="labelProduit" prefHeight="18.0" prefWidth="303.0" text="Nombre de nuitée:" />
+        <Label fx:id="labelQuantity" prefHeight="18.0" prefWidth="338.0" text="Montant (unité):" />
+        <Label fx:id="labelMontantSansRemise" prefHeight="18.0" prefWidth="404.0" text="Total:" />
+    </VBox>
+
+</VBox>

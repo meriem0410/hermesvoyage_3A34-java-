@@ -1,22 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import javafx.collections.FXCollections?>
-<?import javafx.geometry.Insets?>
-<?import javafx.geometry.Rectangle2D?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="960.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.gui.Ajouterhebergement">
+<AnchorPane prefHeight="600.0" prefWidth="960.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.gui.Ajouterhebergement">
     <children>
         <HBox prefHeight="600.0" prefWidth="200.0" style="-fx-background-color: #8ac0b6;">
             <children>
@@ -143,7 +133,7 @@
                                 <Insets bottom="10.0" />
                             </VBox.margin>
                         </Label>
-                        <TextField fx:id="descInput" VBox.vgrow="NEVER" />
+                  <TextField fx:id="descInput" VBox.vgrow="NEVER"  />
                         <Label text="Prix" VBox.vgrow="NEVER">
                             <VBox.margin>
                                 <Insets bottom="10.0" top="10.0" />
@@ -154,21 +144,21 @@
                         <!-- Image -->
                         <Label layoutX="152.0" layoutY="340.0" style="-fx-text-fill: #03045E;" text="Image :" />
                         <Button fx:id="selectImage" layoutX="406.0" layoutY="345.0" mnemonicParsing="false" onAction="#browseImageAction" prefHeight="18.0" prefWidth="30.0" style="-fx-background-color: #03045E; -fx-text-fill: white;" text="..." />
-                        <ImageView fx:id="imageView" fitHeight="80.0" fitWidth="92.0" layoutX="273.0" layoutY="318.0" pickOnBounds="true" preserveRatio="true" />
-
-                        <TextField fx:id="maxgInput" VBox.vgrow="NEVER" />
                         <Label text="Capacité" VBox.vgrow="NEVER">
                             <VBox.margin>
                                 <Insets bottom="10.0" top="10.0" />
                             </VBox.margin>
                         </Label>
 
-                        <TextField fx:id="AmnInput" VBox.vgrow="NEVER" />
+                        <TextField fx:id="maxgInput" VBox.vgrow="NEVER" />
                         <Label text="Amenities" VBox.vgrow="NEVER">
                             <VBox.margin>
                                 <Insets bottom="10.0" />
                             </VBox.margin>
                         </Label>
+
+                        <TextField fx:id="AmnInput" VBox.vgrow="NEVER" />
+                        <ImageView fx:id="imageView" fitHeight="80.0" fitWidth="92.0" layoutX="273.0" layoutY="318.0" pickOnBounds="true" preserveRatio="true" />
                         <Button fx:id="btnSave" mnemonicParsing="false" onAction="#saveHeb" style="-fx-background-color: #d6a523;" text="Enregistrer" textFill="WHITE" VBox.vgrow="NEVER">
                             <VBox.margin>
                                 <Insets left="305.0" />

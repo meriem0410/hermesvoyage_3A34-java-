@@ -12,7 +12,7 @@
             <children>
                 <VBox alignment="CENTER_LEFT" onMouseClicked="#GotoAjouterHebergement" prefHeight="600.0" prefWidth="200.0" HBox.hgrow="NEVER">
                     <children>
-                        <ImageView fitHeight="79.0" fitWidth="162.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="logo" fitHeight="79.0" fitWidth="162.0" onMouseClicked="#gotoFront" pickOnBounds="true" preserveRatio="true">
                             <viewport>
                                 <Rectangle2D />
                             </viewport>
@@ -81,7 +81,7 @@
                                 <Insets left="10.0" top="11.0" />
                             </HBox.margin>
                         </Label>
-                        <TextField prefHeight="26.0" prefWidth="230.0" promptText="Search" style="-fx-background-color: #3f3f40; -fx-text-fill: #fbfcfa;" HBox.hgrow="NEVER">
+                        <TextField prefHeight="26.0" prefWidth="230.0" promptText="Search" style="-fx-background-color: #3f3f40; -fx-text-fill: #fbfcfa;" HBox.hgrow="NEVER" fx:id="filtrefield" onKeyReleased="#handleFiltering">
                             <HBox.margin>
                                 <Insets left="375.0" top="11.0" />
                             </HBox.margin>
@@ -107,7 +107,7 @@
                         </Label>
                         <TableView fx:id="devisTableView" onMouseClicked="#rowClicked" prefHeight="349.0" prefWidth="718.0">
                             <columns>
-                                <TableColumn fx:id="idCol" maxWidth="322.5279846191406" minWidth="90.12799072265625" prefWidth="142.89599609375" resizable="false" text="id" />
+
                                 <TableColumn fx:id="descriptionCol" maxWidth="220.0" minWidth="152.41599774360657" prefWidth="152.41599774360657" resizable="false" text="description" />
                                 <TableColumn fx:id="adresseCol" maxWidth="288.4159393310547" minWidth="116.76795959472656" prefWidth="160.9359893798828" resizable="false" text="adresse" />
                                 <TableColumn fx:id="prixCol" maxWidth="40.7359619140625" minWidth="20.0" prefWidth="40.7359619140625" text="prix" />

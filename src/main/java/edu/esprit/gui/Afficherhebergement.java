@@ -1,17 +1,21 @@
  package edu.esprit.gui;
 
  import javafx.beans.property.SimpleFloatProperty;
- import javafx.beans.property.SimpleIntegerProperty;
  import javafx.beans.property.SimpleStringProperty;
+ import javafx.collections.FXCollections;
+ import javafx.collections.ObservableList;
+ import javafx.collections.transformation.FilteredList;
  import javafx.event.ActionEvent;
  import javafx.scene.Node;
  import javafx.scene.control.*;
+ import javafx.scene.control.TextField;
  import javafx.fxml.FXML;
  import javafx.fxml.FXMLLoader;
  import javafx.fxml.Initializable;
  import javafx.scene.Parent;
  import javafx.scene.Scene;
  import javafx.scene.control.TableView;
+ import javafx.scene.input.KeyEvent;
  import javafx.scene.input.MouseEvent;
  import javafx.stage.Stage;
  import edu.esprit.entities.hebergement;
@@ -24,10 +28,16 @@
  import java.sql.SQLException;
  import java.util.List;
  import java.util.ResourceBundle;
-
-
+ import java.util.function.Predicate;
+ import javafx.collections.transformation.SortedList;
 
  public class Afficherhebergement implements Initializable {
+
+     @FXML
+     private TextField filtrefield;
+     private ObservableList<hebergement> logList = FXCollections.observableArrayList();
+
+
 
      @FXML
      private TableColumn<hebergement, String> adresseCol;
@@ -60,6 +70,7 @@
 
      @FXML
      private Button supprimerButton;
+     private FilteredList<hebergement> filteredList;
 
      public void refreshList() {
          try {
@@ -77,7 +88,14 @@
 
      @Override
      public void initialize(URL url, ResourceBundle resourceBundle) {
+
          try {
+             // Initialize filteredList with all hebergements
+             Servicehebergement servicehebergement = new Servicehebergement();
+             List<hebergement> hebergementList = servicehebergement.afficher();
+             filteredList = new FilteredList<>(FXCollections.observableArrayList(hebergementList));
+
+             // Populate TableView
              populateTableView();
          } catch (SQLException e) {
              e.printStackTrace();
@@ -93,7 +111,7 @@
          devisTableView.getItems().clear();
 
          // Set cell value factories for each column
-         idCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId()).asObject());
+       //  idCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId()).asObject());
          adresseCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAdresse()));
          descriptionCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescription()));
          imageCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getImage()));
@@ -237,6 +255,28 @@
          }
      }
 
+
+     public void gotoFront(MouseEvent actionEvent) {
+         try {
+             // Load the FXML file
+             FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherLogF.fxml"));
+             Parent root = loader.load();
+
+             // Create the scene
+             Scene scene = new Scene(root);
+
+             // Get the stage from the action event
+             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+             // Set the scene on the stage
+             stage.setScene(scene);
+             stage.show();
+         } catch (IOException e) {
+             e.printStackTrace();
+             // Handle any potential IOException
+         }
+     }
+
      public void GotoAjouterHebergement(ActionEvent actionEvent) {
          try {
              // Load the FXML file
@@ -333,6 +373,41 @@
              // No item was selected, do nothing or show an error message
              System.out.println("No item selected.");
          }
+     }
+
+     @FXML
+     private void handleFiltering(KeyEvent event) {
+         // Obtenez le texte saisi dans le champ texte filtrefield
+         String filterText = filtrefield.getText().toLowerCase();
+
+         // Appliquez le filtre en fonction du texte saisi
+         filteredList.setPredicate(logement -> {
+             // Vérifiez si l'une des propriétés du logement contient le texte filtré
+             return logement.getAdresse().toLowerCase().contains(filterText)
+                     || logement.getDescription().toLowerCase().contains(filterText)
+                     || logement.getAmenities().toLowerCase().contains(filterText)
+                     || String.valueOf(logement.getId()).contains(filterText);
+         });
+         filterTableView();
+     }
+     @FXML
+     private void filterTableView() {
+         // Create a predicate to filter the items in the TableView
+         Predicate<hebergement> filterPredicate = logement -> {
+             // Check if any of the logement properties contain the filter text
+             return logement.getDescription().toLowerCase().contains(filtrefield.getText().toLowerCase())
+                     || logement.getAdresse().toLowerCase().contains(filtrefield.getText().toLowerCase())
+                     || logement.getAmenities().toLowerCase().contains(filtrefield.getText().toLowerCase())
+                     || String.valueOf(logement.getId()).contains(filtrefield.getText());
+         };
+
+         // Update the filtered list
+         filteredList.setPredicate(filterPredicate);
+
+         // Bind the filtered list to the TableView
+         SortedList<hebergement> sortedData = new SortedList<>(filteredList);
+         sortedData.comparatorProperty().bind(devisTableView.comparatorProperty());
+         devisTableView.setItems(sortedData);
      }
 
      public void gotoModifierheb(ActionEvent actionEvent) {

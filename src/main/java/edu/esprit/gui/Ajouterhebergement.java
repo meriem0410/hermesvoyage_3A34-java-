@@ -1,8 +1,11 @@
 
 package edu.esprit.gui;
 
+import com.sun.javafx.application.PlatformImpl;
 import edu.esprit.entities.hebergement;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import org.controlsfx.control.Notifications;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -113,6 +116,12 @@ public class Ajouterhebergement {
         }
     }
 
+    private void showNotification(String title, String content) {
+        Notifications notification =Notifications.create()
+                .title(title)
+                .text(content);
+        Platform.runLater(() -> notification.showInformation());
+    }
     // Méthode utilitaire pour afficher une alerte
     private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -249,6 +258,7 @@ public class Ajouterhebergement {
         alert.setTitle("Opération terminée");
         alert.setHeaderText("Voyage ajouté avec succès.");
         alert.showAndWait();
+        showNotification("Success", "Hebergement added successfully!");
         } catch (SQLException e) {
             // Handle SQL exceptions
             showAlert("Erreur SQL", "Une erreur s'est produite lors de l'ajout du hebergement dans la base de données!");

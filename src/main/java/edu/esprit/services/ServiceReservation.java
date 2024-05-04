@@ -10,14 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceReservation extends IServices<reservation> {
-    private  Connection cnx;
+    private Connection con;
 
-    private Statement ste;
+
+    // Initialize the connection
     public ServiceReservation() {
-        cnx = DataSource.getInstance().getCon();
+        con = DataSource.getInstance().getCon(); // Initialize the connection
     }
+    //private Connection cnx= DataSource.getInstance().getCon(); // Utilisez la connexion initialisée dans DataSource
 
-    final Servicehebergement SE = new Servicehebergement();
+
 
 
 
@@ -25,24 +27,23 @@ public class ServiceReservation extends IServices<reservation> {
     //@Override
     @Override
     public void ajouter(reservation reservation) throws SQLException {
-        //cnx = DataSource.getInstance().getCon(); // Supprimez cette ligne car vous avez déjà initialisé la connexion dans le constructeur
-       /* String req = "INSERT INTO reservation (checkin, nbguest, checkout, user_id, Hebergement_id) VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement pre = cnx.prepareStatement(req)) {
-            pre.setDate(1, new java.sql.Date(reservation.getCheckin().getTime())); // Convertissez la Date en java.sql.Date
-            pre.setInt(2, reservation.getNbguest());
-            pre.setDate(3, new java.sql.Date(reservation.getCheckout().getTime())); // Convertissez la Date en java.sql.Date
-            pre.setString(4, reservation.getUser_id());
-            pre.setString(5, reservation.getHebergement_id());
+        System.out.println("Début de l'exécution de la méthode ajouter...");
+        System.out.println("État de la connexion avant l'exécution de la méthode ajouter : " + con.isClosed());
+        //con = DataSource.getInstance().getCon(); // Get the connection here
+
+        String req = "INSERT INTO reservation (checkin, checkout, nbguest, Hebergement_id, User_id) VALUES (?, ?, ?, ?, ?)";
+        PreparedStatement pre = con.prepareStatement(req);
+            System.out.println("Fin de l'exécution de la méthode ajouter.");
+            System.out.println("État de la connexion après l'exécution de la méthode ajouter : " + con.isClosed());
+            pre.setDate(1, reservation.getCheckin());
+            pre.setDate(2, reservation.getCheckout());
+            pre.setInt(3, reservation.getNbguest());
+            pre.setString(4, reservation.getHebergement_id());
+            pre.setString(5, reservation.getUser_id());
 
             pre.executeUpdate();
             System.out.println("Reservation ajoutée avec succès.");
-        } catch (SQLException e) {
-            System.err.println("Error adding Reservation: " + e.getMessage());
-        }*/
-        cnx = DataSource.getInstance().getCon(); // Get the connection here
-        String req = "insert into reservation (checkin, checkout, nbguest, Hebergement_id, User_id) values('" + reservation.getCheckin() + "','" + reservation.getCheckout() + "','" + reservation.getNbguest() + "','" + reservation.getHebergement_id() + "','" + reservation.getUser_id() + "')";
-        ste = cnx.createStatement();
-        ste.executeUpdate(req);
+
     }
 
 
@@ -50,7 +51,7 @@ public class ServiceReservation extends IServices<reservation> {
     public void modifier(reservation reservation) throws SQLException {
 
         String req = "UPDATE reservation SET checkin=?, nbguest=?, checkout=?, Hebergement_id=?  WHERE id=?";
-        try (PreparedStatement pre = cnx.prepareStatement(req)) {
+        try (PreparedStatement pre = con.prepareStatement(req)) {
             pre.setDate(1, reservation.getCheckin());
             pre.setInt(2, reservation.getNbguest());
             pre.setDate(3, reservation.getCheckout());
@@ -68,7 +69,7 @@ public class ServiceReservation extends IServices<reservation> {
     public void supprimer(reservation reservation) throws SQLException {
 
         String req = "DELETE FROM reservation WHERE id=?";
-        try (PreparedStatement pre = cnx.prepareStatement(req)) {
+        try (PreparedStatement pre = con.prepareStatement(req)) {
             pre.setInt(1, reservation.getId());
             pre.executeUpdate();
         } catch (SQLException e) {
@@ -92,7 +93,7 @@ public class ServiceReservation extends IServices<reservation> {
                 "FROM reservation " +
                 " INNER JOIN Hebergement  ON reservation.Hebergement_id = Hebergement.id";
         List<reservation> list = new ArrayList<>();
-        try (Statement ste = cnx.createStatement(); ResultSet res = ste.executeQuery(req)) {
+        try (Statement ste = con.createStatement(); ResultSet res = ste.executeQuery(req)) {
             while (res.next()) {
                 reservation reservation = new reservation();
                 reservation.setId(res.getInt("id"));

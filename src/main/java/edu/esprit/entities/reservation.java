@@ -31,7 +31,25 @@ public class reservation {
                 this.user_id=userIdValue;
         }
 
-        public int getId() {
+    public reservation(Date checkinDate, Date checkoutDate, String hebergementIdValue, String userIdValue) {
+        this.id = id;
+        //this.nbguest = nombrePlaces;
+        this.checkin = checkinDate;
+        this.checkout = checkoutDate;
+        this.heberegement_id=hebergementIdValue;
+        this.user_id=userIdValue;
+        }
+
+    public reservation(Date checkinDate, Date checkoutDate, int nombrePlaces, int hebergementIdValue, String userIdValue) {
+
+        //this.nbguest = nombrePlaces;
+        this.checkin = checkinDate;
+        this.checkout = checkoutDate;
+        this.heberegement_id= String.valueOf(hebergementIdValue);
+        this.user_id=userIdValue;
+    }
+
+    public int getId() {
                 return id;
         }
 
@@ -81,17 +99,19 @@ public class reservation {
                 return Objects.hash(id, nbguest, checkin, checkout);
         }
 
-        @Override
-        public String toString() {
-                return "reservation{" +
-                        "id=" + id +
-                        ", nbguest=" + nbguest +
-                        ", checkin=" + checkin +
-                        ", checkout=" + checkout +
-                        '}';
-        }
+    @Override
+    public String toString() {
+        return "reservation{" +
+                "id=" + id +
+                ", nbguest=" + nbguest +
+                ", checkin=" + checkin +
+                ", checkout=" + checkout +
+                ", user_id='" + user_id + '\'' +
+                ", heberegement_id='" + heberegement_id + '\'' +
+                '}';
+    }
 
-        public String getUser_id() {
+    public String getUser_id() {
                 return user_id;
         }
 

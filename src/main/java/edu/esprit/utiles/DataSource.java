@@ -6,33 +6,38 @@ import java.sql.SQLException;
 
 public class DataSource {
 
-    private final String URL = "jdbc:mysql://localhost:3306/hermes1";
+    private final String URL = "jdbc:mysql://localhost:3306/hermes2";
 
-    private final String USER = "";
+    private final String USER = "root";
 
     private final String PASSWD ="";
 
     private Connection cnx ;
-    private Connection con;
+    private static DataSource instance;
 
-
-    public DataSource() {
+    // Constructeur privé pour empêcher l'instanciation directe depuis l'extérieur de la classe
+    private DataSource() {
+        // Initialisation de la connexion ici
         try {
-            con = DriverManager.getConnection(URL , USER, PASSWD);
-            System.out.println("connected to DB");
-        } catch (SQLException e){
+            cnx = DriverManager.getConnection(URL  , USER, PASSWD);
+            System.out.println("Connected to DB ");
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public Connection getCon() {
-        return con;
-    }
-    public static DataSource instance;
-    public static DataSource getInstance() {
+    // Méthode statique pour récupérer l'instance unique de la classe
+    public static synchronized DataSource getInstance() {
         if (instance == null) {
             instance = new DataSource();
         }
         return instance;
     }
+
+    // Méthode pour récupérer la connexion à la base de données
+    public Connection getCon() {
+        return cnx;
+    }
+
+
 }
